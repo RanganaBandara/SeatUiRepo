@@ -1,0 +1,41 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Intern Dashboard</h1>
+    <p>Welcome! Here are the available seats for booking:</p>
+  </header>
+
+  <div class="date-picker-container">
+    <label for="datePicker">Select Date:</label>
+    <input id="datePicker" type="date" [(ngModel)]="selectedDate" (change)="onDateChange()" />
+  </div>
+
+  <section class="seats-section">
+    <div class="seat-card" *ngFor="let seat of filteredSeats">
+      <div class="seat-info">
+        <span>Seat {{ seat.number }}</span>
+        <button *ngIf="seat.isAvailable" class="book-seat-btn" (click)="bookSeat(seat)">Book</button>
+        <span *ngIf="!seat.isAvailable" class="booked-text">Booked</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Booking Form Modal -->
+<div *ngIf="showBookingForm" class="booking-form-modal">
+  <div class="booking-form-content">
+    <h2>Book Seat {{ selectedSeat?.number }}</h2>
+    <form [formGroup]="bookingForm" (ngSubmit)="submitBooking()">
+      <label for="employeeId">Employee ID:</label>
+      <input id="employeeId" formControlName="employeeId" required />
+
+      <label for="employeeName">Name:</label>
+      <input id="employeeName" formControlName="employeeName" required />
+
+      <!-- Removed date field from the booking form modal -->
+
+      <button type="submit" [disabled]="isSubmitting">Submit</button>
+
+      <button type="button" (click)="cancelBooking()">Cancel</button>
+    </form>
+  </div>
+</div>

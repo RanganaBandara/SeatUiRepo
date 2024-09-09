@@ -1,0 +1,182 @@
+/* Container for the dashboard */
+.dashboard-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-image: url('/assets/seat.jpg');
+ 
+  background-size: cover;background-position: center;
+ 
+
+ 
+}
+
+
+/* Date picker container styling */
+.date-picker-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#datePicker {
+  padding: 10px;
+  font-size: 1em;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+.dashboard-header h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.dashboard-header p {
+  font-size: 1.2em;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Seats section styling */
+.seats-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+  justify-content: center;
+}
+
+/* Individual seat card styling */
+.seat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 120px;
+  height: 120px;
+  border: 2px solid #007bff;
+  border-radius: 6px;
+  background-color: #f1f1f1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 10px;
+  position: relative;
+  font-size: 0.9em;
+}
+
+/* Adjust seat info styling */
+.seat-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Button styling */
+.book-seat-btn {
+  padding: 5px 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.book-seat-btn:hover {
+  background-color: #218838;
+}
+
+/* Booked seat styling */
+.booked-text {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .seat-card {
+    max-width: 100px;
+    height: 100px;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .seat-card {
+    max-width: 80px;
+    height: 80px;
+    font-size: 0.7em;
+  }
+
+  #datePicker {
+    max-width: 100%;
+  }
+}
+
+
+
+/* Booking form modal styling */
+.booking-form-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.booking-form-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.booking-form-content h2 {
+  margin-top: 0;
+}
+
+.booking-form-content label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.booking-form-content input {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.booking-form-content button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.booking-form-content button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+.booking-form-content button[type="button"] {
+  background-color: #dc3545;
+  color: white;
+}

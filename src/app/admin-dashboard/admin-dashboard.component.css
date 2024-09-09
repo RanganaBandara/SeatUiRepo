@@ -1,0 +1,116 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.dashboard-container {
+    min-height: 100vh; 
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    background-color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.seat-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 900px;
+    height: 400px;
+    margin-right: 100px;
+    margin-bottom: 70px;
+    border-radius: 25px;
+    box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    position: absolute;
+    top: 50px;
+    left: 80px;
+    margin: 0;
+    padding: 10px;
+    font-weight: bolder;
+    font-size: 40px;
+}
+
+.lg button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 20px;
+    margin-right: 100px;
+    margin-top: 50px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.lg button:hover {
+    background: blue;
+}
+
+.vb button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 20px;
+    margin-right: 200px;
+    margin-top: 50px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.vb button:hover {
+    background: blue;
+}
+
+.vre button {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    padding: 10px 20px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.vre button:hover {
+    background: blue;
+}
+
+.bs button {
+    position: absolute;
+    top: 60%;
+    left: 10%;
+    transform: translateY(-50%);
+    padding: 10px 20px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.bs button:hover {
+    background: blue;
+}

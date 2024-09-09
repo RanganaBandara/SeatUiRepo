@@ -1,0 +1,48 @@
+<div class="admin-booking-view-container">
+  <header>
+    <h1>View Bookings</h1>
+    <p>Select a date to view bookings:</p>
+    <form [formGroup]="bookingForm">
+      <mat-form-field>
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="selectedDate" (dateChange)="onDateChange($event)">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      
+    </form>
+    
+  </header>
+
+  <section *ngIf="bookings.length >0">
+    <table class="bookings-table">
+      <thead>
+        <tr>
+          <th>Res_Id</th>
+          <th>Seat Number</th>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Reservation Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings">
+          <td>{{ booking.reservationId }}</td>
+          <td>{{ booking.seatNumber }}</td>
+          <td>{{ booking.employeeId }}</td>
+          <td>{{ booking.employeeName }}</td>
+          <td>{{ booking.reservationDate }}</td>
+          <td>
+            <button (click)="cancelBooking(booking)">Cancel</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section *ngIf="bookings.length === 0">
+    <p>No bookings found for the selected date.</p>
+  </section>
+</div>

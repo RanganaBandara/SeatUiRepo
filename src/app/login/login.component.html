@@ -1,36 +1,37 @@
-<div class="container-wrapper">
-
-    <div class="image-container">
-    <img src="assets/seat.jpg" alt="Seat Image">
-    </div>
-
-    <div class="login-form-container">
-      <form class="login-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        
-        <h2 class="form-title">Login</h2>
-
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input id="email" formControlName="email" />
-          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
-            <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
-            <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>
+<div class="body">
+  <div class="container-wrapper">
+  
+      <!--div class="image-container">
+      <img src="assets/seat.jpg" alt="Seat Image">
+      </div-->
+  
+      <div class="login-form-container">
+        <form class="login-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          
+          <h2 class="form-title">Intern Login</h2>
+  
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" formControlName="email" />
+            <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+              <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+              <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>
+            </div>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input id="password" type="password" formControlName="password" />
-          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-            <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+  
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" formControlName="password" />
+            <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+              <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+            </div>
           </div>
-        </div>
-
-        <button type="submit" class="login-btn" (click)="onSubmit()">Login</button>
-        <button type="button" class="register-btn" (click)="onRegister()">Register</button>
-        <button type="button" class="home-btn" (click)="onHome()">Home</button>
-
-      </form>
+  
+          <button type="submit" class="login-btn" (click)="onLogin()">Login</button>
+          <button type="button" class="register-btn" (click)="onRegister()">Register</button>
+          <button type="button" class="home-btn" (click)="onHome()">Home</button>
+  
+        </form>
+      </div>
     </div>
   </div>
-  

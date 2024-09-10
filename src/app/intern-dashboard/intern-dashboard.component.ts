@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Seat } from '../../models/internDashboard.model';
-import { AuthService } from '../services/auth.service';
+
 @Component({
   selector: 'app-intern-dashboard',
   standalone: true,
@@ -13,7 +13,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./intern-dashboard.component.css']
 })
 export class InternDashboardComponent {
-
+  
   seats: Seat[] = [];
   selectedDate: Date | null = null;
   filteredSeats: Seat[] = [];
@@ -23,13 +23,8 @@ export class InternDashboardComponent {
 
   bookingForm: FormGroup;
 
-  private http = inject(HttpClient);
-  private router = inject(Router);
-  private authService = inject(AuthService); // Inject AuthService to get user details
-
-  // Assume these values are fetched from the AuthService after login
-  employeeName: string | null = null;
-  employeeId: string | null = null;
+  private http = inject(HttpClient); // Inject HttpClient
+  private router = inject(Router); // Inject Router
 
   constructor() {
     this.seats = Array.from({ length: 20 }, (_, i) => ({
@@ -39,25 +34,23 @@ export class InternDashboardComponent {
     }));
     this.filteredSeats = [...this.seats];
 
-    // Get the logged-in user's details from AuthService
-    this.employeeName = this.authService.getEmployeeName();
-    this.employeeId = this.authService.getEmployeeId();
-
-    // No need to add employeeName and employeeId to the form
     this.bookingForm = new FormGroup({
-      // Any other form controls if necessary
+      //employeeName: new FormControl('', Validators.required),
+      //employeeId: new FormControl('', Validators.required),
+      
     });
   }
-
+  
   onDateChange() {
     if (this.selectedDate) {
       const selectedDateStr = new Date(this.selectedDate).toDateString();
+      console.log(selectedDateStr);
       this.filteredSeats = this.seats.filter(seat => !seat.bookings[selectedDateStr]);
     } else {
       this.filteredSeats = [...this.seats];
     }
   }
-
+  
   bookSeat(seat: Seat) {
     this.selectedSeat = seat;
     this.showBookingForm = true;
@@ -66,28 +59,35 @@ export class InternDashboardComponent {
   submitBooking() {
     this.isSubmitting = true;
     console.log('Submit Booking Button Clicked');
-
+  
     if (this.bookingForm.valid && this.selectedSeat) {
       const selectedDateStr = new Date(this.selectedDate!).toDateString(); // Use the selected date
-
+  
       // Prepare the booking data to send to the backend
       const bookingData = {
-        EmployeeName: this.employeeName,
-        EmployeeId: this.employeeId,
+        EmployeeName: this.bookingForm.get('employeeName')?.value,
+        EmployeeId: this.bookingForm.get('employeeId')?.value,
+        
         ReservationDate: selectedDateStr, // Include the date in the booking data
         SeatNumber: this.selectedSeat.number
       };
-
+  
       // Send the booking data to the backend API
+      
       console.log(bookingData);
       this.http.post('http://localhost:5121/api/Seats/Reserve', bookingData).subscribe({
+        
         next: (response) => {
+          
           console.log('Booking successful:', response);
+          
+          
           alert('Booking confirmed successfully!');
-
+  
           // Mark the seat as booked locally
           this.selectedSeat!.bookings[selectedDateStr] = true;
           this.onDateChange();
+  
           this.showBookingForm = false;
         },
         error: (error) => {
@@ -99,11 +99,11 @@ export class InternDashboardComponent {
         }
       });
     } else {
-      alert('Please select a seat and a date.');
+      alert('Please fill out the form correctly.');
       this.isSubmitting = false;
     }
   }
-
+  
   cancelBooking() {
     this.showBookingForm = false;
   }

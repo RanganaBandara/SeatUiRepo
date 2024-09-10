@@ -25,13 +25,7 @@
   <div class="booking-form-content">
     <h2>Book Seat {{ selectedSeat?.number }}</h2>
     <form [formGroup]="bookingForm" (ngSubmit)="submitBooking()">
-      <label for="employeeId">Employee ID:</label>
-      <input id="employeeId" formControlName="employeeId" required />
-
-      <label for="employeeName">Name:</label>
-      <input id="employeeName" formControlName="employeeName" required />
-
-      <!-- Removed date field from the booking form modal -->
+      <!-- Removed employeeId and employeeName fields -->
 
       <button type="submit" [disabled]="isSubmitting">Submit</button>
 

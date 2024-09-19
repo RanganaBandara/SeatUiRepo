@@ -6,6 +6,24 @@
       <h2 class="form-title">Register</h2>
 
       
+      <div class="form-group">
+      <label for="name">Name:</label>
+      <input id="name" formControlName="Name" type="name" class="form-control" />
+      <div *ngIf="registerForm.get('Name')?.touched && registerForm.get('Name')?.invalid" class="error-message">
+        <small *ngIf="registerForm.get('Name')?.errors?.['required']">Name is required.</small>
+        <small *ngIf="registerForm.get('Name')?.errors?.['Name']">Invalid name format.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="id">Id:</label>
+      <input id="id" formControlName="Id" type="id" class="form-control" />
+      <div *ngIf="registerForm.get('Id')?.touched && registerForm.get('Id')?.invalid" class="error-message">
+        <small *ngIf="registerForm.get('Id')?.errors?.['required']">Id is required.</small>
+        <small *ngIf="registerForm.get('Id')?.errors?.['Id']">Invalid id format.</small>
+      </div>
+    </div>
+
 
       <div class="form-group">
         <label for="email">Email:</label>

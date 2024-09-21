@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-register',
@@ -20,9 +21,9 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.registerForm = this.fb.group({
       Name: ['', [Validators.required]],
-      Id: ['', [Validators.required]],
+      User_Id: ['', [Validators.required]],
      Email: ['', [Validators.required]],
-      Password: ['', Validators.required],
+     Password: ['', Validators.required],
       Phone_Number: ['',Validators.required]
     });
   }
@@ -32,7 +33,9 @@ export class RegisterComponent {
       this.http.post(this.apiUrl, this.registerForm.value)
         .subscribe(
           response => {
-            console.log('Employee registered successfully', response);
+            console.log(this.registerForm.value);
+            console.log(response);
+            
             this.router.navigate(['/login']); 
             
           },

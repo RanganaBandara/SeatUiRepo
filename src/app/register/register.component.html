@@ -17,10 +17,10 @@
 
     <div class="form-group">
       <label for="id">Id:</label>
-      <input id="id" formControlName="Id" type="id" class="form-control" />
-      <div *ngIf="registerForm.get('Id')?.touched && registerForm.get('Id')?.invalid" class="error-message">
-        <small *ngIf="registerForm.get('Id')?.errors?.['required']">Id is required.</small>
-        <small *ngIf="registerForm.get('Id')?.errors?.['Id']">Invalid id format.</small>
+      <input id="id" formControlName="User_Id" type="id" class="form-control" />
+      <div *ngIf="registerForm.get('User_Id')?.touched && registerForm.get('User_Id')?.invalid" class="error-message">
+        <small *ngIf="registerForm.get('User_Id')?.errors?.['required']">Id is required.</small>
+        <small *ngIf="registerForm.get('User_Id')?.errors?.['User_Id']">Invalid id format.</small>
       </div>
     </div>
 

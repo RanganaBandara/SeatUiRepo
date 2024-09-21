@@ -12,7 +12,7 @@
   
           <div class="form-group">
             <label for="email">Email</label>
-            <input id="email" formControlName="email" />
+            <input id="text" formControlName="email" />
             <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
               <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
               <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>

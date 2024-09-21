@@ -11,11 +11,12 @@
           <h2 class="form-title">Intern Login</h2>
   
           <div class="form-group">
-            <label for="email">Email</label>
-            <input id="text" formControlName="email" />
-            <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
-              <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
-              <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>
+          <label for="id">Trainee Id</label>
+          <input id="id" formControlName="id" />
+          <div *ngIf="loginForm.get('id')?.touched && loginForm.get('id')?.invalid">
+          <small *ngIf="loginForm.get('id')?.errors?.['required']">Id is required.</small>
+          <small *ngIf="loginForm.get('id')?.errors?.['pattern']">Id must be a number.</small>
+
             </div>
           </div>
   

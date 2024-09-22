@@ -16,7 +16,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },  
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'intern-dashboard', component: InternDashboardComponent },
+  { path: 'intern-dashboard/:userid', component: InternDashboardComponent },
   { path: 'admin-dashboard', component:AdminDashboardComponent },
   { path: 'admin-booking', component:AdminBookingViewComponent },
 

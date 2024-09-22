@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Seat } from '../../models/internDashboard.model';
 
 @Component({
@@ -20,13 +20,34 @@ export class InternDashboardComponent {
   selectedSeat: Seat | null = null;
   showBookingForm: boolean = false;
   isSubmitting: boolean = false;
+  Id:any;
+  username:any;
 
   bookingForm: FormGroup;
 
   private http = inject(HttpClient); // Inject HttpClient
   private router = inject(Router); // Inject Router
+  
+  
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      this.Id = params['userid'];
+      console.log(this.Id);
+      this.http.get(`http://localhost:5121/User/User_Id${this.Id}`).subscribe({
+         next: (value) => {
+        if (value !=null) {
+            this.username = value; // Access the name property directly
+        }
+        else{
+          this.username="ran";
+        }
+    }});
+    })
+       // Get the login ID from the route parameters
+    
+      
+     
     this.seats = Array.from({ length: 20 }, (_, i) => ({
       number: i + 1,
       bookings: {},

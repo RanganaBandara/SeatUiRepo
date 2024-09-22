@@ -15,8 +15,11 @@ import { NotificationService } from '../services/notification.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  username:any;
+  userid:any;
 
-  private apiUrl = 'http://localhost:5121/User/Login'; // Update URL if necessary
+  private apiUrl = 'http://localhost:5121/User/Login';
+   private apiUrl1 = 'http://localhost:5121/User/User_Id';  // Update URL if necessary
 
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
@@ -25,8 +28,8 @@ export class LoginComponent {
 
   constructor() {
     this.loginForm = this.fb.group({
-      id: ['',[ Validators.required,Validators.pattern('^[0-9]*$')]],
-      password: ['', Validators.required]
+      User_Id: ['',[ Validators.required,Validators.pattern('^[0-9]*$')]],
+      Password: ['', Validators.required]
     });
   }
  
@@ -37,33 +40,37 @@ onRegister(): void {
 onHome(): void {
   this.router.navigate(['/home']);
 }
-onLogin(): void {
+onLogin() {
  
   
   
   this.notificationService.showSuccess('Login successful!'); // Show success message
 }
 
-onSubmit(): void {
+onSubmit(){
+  const addloginrequest = {
+    User_Id: this.loginForm.value. User_Id,
+    Password: this.loginForm.value.Password
+  };
   if (this.loginForm.valid) {
-    this.http.post(this.apiUrl,this.loginForm.value).subscribe({
-       next: (value) => {
-
-      if(value!=null){
-       this.onLogin();
-       this.router.navigate(['/intern-dashboard']);
-
+    this.userid=addloginrequest.User_Id;
+    this.http.post('http://localhost:5121/User/Login', addloginrequest).subscribe({
+      next: (value) => {
         
-
-        
-      }else{
+       
+             
+              this.router.navigate(['/intern-dashboard',this.userid])
+            }
+          })
+        }else{
       this.notificationService.showError("Invalid Credentials or register please");
+      
       }
       }
-    });
-  }
+    };
+  
   
 
 
 
-}}
+

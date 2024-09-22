@@ -12,19 +12,19 @@
   
           <div class="form-group">
           <label for="id">Trainee Id</label>
-          <input id="id" formControlName="id" />
-          <div *ngIf="loginForm.get('id')?.touched && loginForm.get('id')?.invalid">
-          <small *ngIf="loginForm.get('id')?.errors?.['required']">Id is required.</small>
-          <small *ngIf="loginForm.get('id')?.errors?.['pattern']">Id must be a number.</small>
+          <input id="id" formControlName="User_Id" />
+          <div *ngIf="loginForm.get('User_Id')?.touched && loginForm.get('User_Id')?.invalid">
+          <small *ngIf="loginForm.get('User_Id')?.errors?.['required']">Id is required.</small>
+          <small *ngIf="loginForm.get('User_Id')?.errors?.['pattern']">Id must be a number.</small>
 
             </div>
           </div>
   
           <div class="form-group">
             <label for="password">Password</label>
-            <input id="password" type="password" formControlName="password" />
-            <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-              <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+            <input id="password" type="password" formControlName="Password" />
+            <div *ngIf="loginForm.get('Password')?.touched && loginForm.get('Password')?.invalid">
+              <small *ngIf="loginForm.get('Password')?.errors?.['required']">Password is required.</small>
             </div>
           </div>
   

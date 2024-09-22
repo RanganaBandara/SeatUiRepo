@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { data, event } from 'jquery';
-
+import { Router } from '@angular/router';
 
 interface Booking {
   reservationId:number;
@@ -42,7 +42,9 @@ export class AdminBookingViewComponent implements OnInit {
   private flturl='http://localhost:5121/api/Seats/Filtering/{dt}';
   private dlturl='http://localhost:5121/api/Seats/CancelReservation/{id}';
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  
+
+  constructor(private http: HttpClient, private fb: FormBuilder ,private router: Router) {
     this.bookingForm = this.fb.group({
       selectedDate: [''] // Form control for selectedDate
     });
@@ -109,4 +111,30 @@ export class AdminBookingViewComponent implements OnInit {
    // console.log('Form submitted with data:', formData);
     // Send formData to your backend or handle it accordingly
   //}
+  //-------------------------------------------------
+  // Logout the user and navigate to the login page
+  logout(): void {
+    this.router.navigate(['/admin-login']);
+  }
+  
+
+  // Navigate to Manage Bookings page
+  //managebookings(): void {
+    //this.router.navigate(['/admin-booking']);
+  //}
+
+  // Navigate to View Booking History page
+  viewBookingHistory(): void {
+    this.router.navigate(['/admin-history']);
+  }
+
+  // Navigate to View Bookings page
+  viewBookings(): void {
+    this.router.navigate(['/admin-booking']);
+  }
+  //navigate to admin dashboard
+  dashboard(): void {
+    this.router.navigate(['/admin-dashboard']);
+  }
+//--------------------------------------------------
 }

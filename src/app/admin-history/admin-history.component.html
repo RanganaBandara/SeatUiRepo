@@ -30,14 +30,16 @@
               <thead>
                 <tr>
                   <th>Seat Number</th>
-                  <th>Reservation ID</th>
+                  <th>Reservation Date</th>
+                  <th>Employee ID</th>
                   <th>Employee Name</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let booking of employeeBookings">
                   <td>{{ booking.seatNumber || 'N/A' }}</td>
-                  <td>{{ booking.reservationId || 'N/A' }}</td>
+                  <td>{{ booking.reservationDate || 'N/A' }}</td>
+                  <td>{{ booking.user_Id || 'N/A' }}</td>
                   <td>{{ booking.employeeName || 'N/A' }}</td>
                 </tr>
               </tbody>

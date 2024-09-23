@@ -16,15 +16,14 @@
     </div>
 
     <div class="form-group">
-      <label for="id">Id:</label>
+      <label for="id">Trainee Id:</label>
       <input id="id" formControlName="User_Id" type="id" class="form-control" />
       <div *ngIf="registerForm.get('User_Id')?.touched && registerForm.get('User_Id')?.invalid" class="error-message">
         <small *ngIf="registerForm.get('User_Id')?.errors?.['required']">Id is required.</small>
-        <small *ngIf="registerForm.get('User_Id')?.errors?.['User_Id']">Invalid id format.</small>
+        <small *ngIf="registerForm.get('User_Id')?.errors?.['pattern']">Id must be a number.</small>
       </div>
     </div>
-
-
+    
       <div class="form-group">
         <label for="email">Email:</label>
         <input id="email" formControlName="Email" type="email" class="form-control" />

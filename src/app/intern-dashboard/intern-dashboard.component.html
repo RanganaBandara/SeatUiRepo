@@ -1,3 +1,13 @@
+<div class="full">
+  <nav class="sidebar">
+    <h2>Intern Panel</h2>
+    <ul>
+      <li (click)="dashboard()">Dashboard</li>
+      <li (click)="viewBookings()">View Bookings</li>
+      <!-- <li (click)="viewBookingHistory()">View Booking History</li> -->
+      <li (click)="logout()">Log Out</li>
+    </ul>
+  </nav>
 <div class="dashboard-container">
   <header class="dashboard-header">
     <h1>Intern Dashboard</h1>
@@ -32,4 +42,6 @@
       <button type="button" (click)="cancelBooking()">Cancel</button>
     </form>
   </div>
+</div>
+
 </div>

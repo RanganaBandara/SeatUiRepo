@@ -6,7 +6,7 @@ import { InternDashboardComponent } from './intern-dashboard/intern-dashboard.co
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminBookingViewComponent } from './admin-booking-view/admin-booking-view.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
-
+import { AdminHistoryComponent } from './admin-history/admin-history.component';
 
 //import { ForgetPasswordComponent } from './forgot-password/forgot-password.component';
 //import { VerifyCodeComponent } from './verify-code/verify-code.component';
@@ -21,6 +21,7 @@ export const routes: Routes = [
   { path: 'admin-booking', component:AdminBookingViewComponent },
 
   {path:'admin-login',component:AdminLoginComponent},
+  {path:'admin-history',component:AdminHistoryComponent},
 
   
  // { path: 'forgot-password', component: ForgetPasswordComponent },

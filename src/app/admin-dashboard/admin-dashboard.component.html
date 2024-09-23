@@ -1,23 +1,45 @@
 <div class="dashboard-container">
 
-  <header class="dashboard-header">
-    <h1>Admin Dashboard</h1>
-   </header>
-
-   <div class="lg">
-      <button (click)="logout()">Log out</button>
-   </div>
-   <div class="vb">
-      <button (click)="managebookings()">Booked Seats</button>
-   </div>
-
+   <!-- Left Navigation Panel -->
+   <nav class="sidebar">
+     <h2>Admin Panel</h2>
+     <ul>
+       <li (click)="viewBookings()">View Bookings</li>
+       <li (click)="viewBookingHistory()">View Booking History</li>
+       <li (click)="logout()">Log Out</li>
+     </ul>
+   </nav>
  
-   <div class="vre">
-      <button>View Registered Employees</button>
+   <!-- Main Content Area -->
+   <div class="main-content">
+     
+     <!-- Date Picker -->
+     <div class="date-picker-section">
+       <h2>Select a Date</h2>
+       <input type="date" (change)="onDateChange($event)" />
+     </div>
+ 
+     <!-- Seat Information Cards -->
+     <div class="seat-info">
+       <h3>Seat Information for <span id="selectedDate">{{ selectedDate }}</span></h3>
+       <div class="card-container">
+         <div class="card">
+           <h4>Total Seats</h4>
+           <p>{{ totalSeats }}</p>
+         </div>
+         <div class="card">
+           <h4>Total Booked Seats</h4>
+           <p>{{ bookedSeats }}</p>
+         </div>
+         <div class="card">
+           <h4>Total Available Seats</h4>
+           <p>{{ availableSeats }}</p>
+         </div>
+       </div>
+     </div>
+     
+     <!-- Image -->
+     <!--img src="/assets/seat.jpg" alt="Seat" class="seat-image"-->
    </div>
-  
-
-   <img src="/assets/seat.jpg" alt="Seat" class="seat-image">
-
-
-</div>
+ 
+ </div>

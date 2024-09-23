@@ -1,45 +1,47 @@
 <div class="dashboard-container">
 
-   <!-- Left Navigation Panel -->
-   <nav class="sidebar">
-     <h2>Admin Panel</h2>
-     <ul>
-       <li (click)="viewBookings()">View Bookings</li>
-       <li (click)="viewBookingHistory()">View Booking History</li>
-       <li (click)="logout()">Log Out</li>
-     </ul>
-   </nav>
- 
-   <!-- Main Content Area -->
-   <div class="main-content">
-     
-     <!-- Date Picker -->
-     <div class="date-picker-section">
-       <h2>Select a Date</h2>
-       <input type="date" (change)="onDateChange($event)" />
-     </div>
- 
-     <!-- Seat Information Cards -->
-     <div class="seat-info">
-       <h3>Seat Information for <span id="selectedDate">{{ selectedDate }}</span></h3>
-       <div class="card-container">
-         <div class="card">
-           <h4>Total Seats</h4>
-           <p>{{ totalSeats }}</p>
-         </div>
-         <div class="card">
-           <h4>Total Booked Seats</h4>
-           <p>{{ bookedSeats }}</p>
-         </div>
-         <div class="card">
-           <h4>Total Available Seats</h4>
-           <p>{{ availableSeats }}</p>
-         </div>
-       </div>
-     </div>
-     
-     <!-- Image -->
-     <!--img src="/assets/seat.jpg" alt="Seat" class="seat-image"-->
-   </div>
- 
- </div>
+  <!-- Left Navigation Panel -->
+  <nav class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+      <li (click)="viewBookings()">View Bookings</li>
+      <li (click)="viewBookingHistory()">View Booking History</li>
+      <li (click)="logout()">Log Out</li>
+    </ul>
+  </nav>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+    
+    <!-- Date Picker -->
+    <mat-form-field>
+       <mat-label>Choose a date</mat-label>
+       <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+       <mat-hint>MM/DD/YYYY</mat-hint>
+       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+       <mat-datepicker #picker></mat-datepicker>
+     </mat-form-field>
+
+    <!-- Seat Information Cards -->
+    <div class="seat-info">
+      <h3>Seat Information for <span id="selectedDate">{{ selectedDate }}</span></h3>
+      <div class="card-container">
+        <div class="card">
+          <h4>Total Seats</h4>
+          <p>{{ totalSeats }}</p>
+        </div>
+        <div class="card">
+          <h4>Total Booked Seats</h4>
+          <p>{{ bookedSeats }}</p>
+        </div>
+        <div class="card">
+          <h4>Total Available Seats</h4>
+          <p>{{ availableSeats }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Image -->
+    <!--img src="/assets/seat.jpg" alt="Seat" class="seat-image"-->
+  
+

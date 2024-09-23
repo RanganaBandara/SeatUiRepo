@@ -114,7 +114,7 @@ export class AdminBookingViewComponent implements OnInit {
   //-------------------------------------------------
   // Logout the user and navigate to the login page
   logout(): void {
-    this.router.navigate(['/admin-login']);
+    this.router.navigate(['/home']);
   }
   
 

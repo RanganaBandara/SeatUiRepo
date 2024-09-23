@@ -16,7 +16,11 @@ import { NotificationService } from '../services/notification.service';
 export class AdminLoginComponent {
   loginForm: FormGroup;
 
+  //uncomment this when adding the backend api
   private apiUrl = 'http://localhost:5121/User/Login'; // Update URL if necessary
+
+  private hardcodedEmail = 'admin@gmail.com'; // Hardcoded email
+  private hardcodedPassword = '1234';        // Hardcoded password
 
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
@@ -41,6 +45,8 @@ export class AdminLoginComponent {
     this.notificationService.showSuccess('Login successful!'); // Show success message
   }
 
+  /*This onsubmit method is for when data comming from the backend
+  
   onSubmit(): void {
     if (this.loginForm.valid) {
       this.login(this.loginForm.value).subscribe(
@@ -55,8 +61,28 @@ export class AdminLoginComponent {
     } else {
       console.error('Form is invalid');
     }
-  }
-
+  }*/
+ 
+ ///following on sumbit method is for hardcoding
+    onSubmit(): void {
+      const { email, password } = this.loginForm.value;
+  
+      // Check if the form is valid
+      if (this.loginForm.valid) {
+        // Hardcoded login check
+        if (email === this.hardcodedEmail && password === this.hardcodedPassword) {
+          console.log('Login successful');
+          this.onLogin(); // Navigate to admin dashboard
+        } else {
+          console.error('Invalid credentials');
+          this.notificationService.showError('Invalid email or password!'); // Show error message
+        }
+      } else {
+        console.error('Form is invalid');
+        this.notificationService.showError('Please fill out the form correctly!'); // Show form invalid message
+      }
+    }
+////////////////////////////////////
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post<any>(this.apiUrl, credentials);
   }

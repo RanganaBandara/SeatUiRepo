@@ -111,7 +111,7 @@ export class InternBookingComponent  implements OnInit {
   //-------------------------------------------------
   // Logout the user and navigate to the login page
   logout(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
   
 

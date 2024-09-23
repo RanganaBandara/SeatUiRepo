@@ -1,6 +1,6 @@
 /* Container to hold the background image and content */
 .home-container {
-    background-image: url('/assets/background.jpg');
+    background-image: url('/assets/seat.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;

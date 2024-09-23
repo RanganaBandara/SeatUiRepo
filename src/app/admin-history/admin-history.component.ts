@@ -14,6 +14,7 @@ export class AdminHistoryComponent {
   bookingHistoryForm: FormGroup;
   employeeBookings: any[] = []; // Store fetched booking data here
   isLoading: boolean = false;
+  details:any;
 
   // Inject the HttpClient for making HTTP requests
   private http = inject(HttpClient);
@@ -60,10 +61,10 @@ export class AdminHistoryComponent {
     
         // Send GET request to backend API with employeeId
         this.http.get<any[]>(`http://localhost:5121/api/Seats/rsedeatils/${employeeId}`).subscribe({
-          next: (response) => {
-            console.log('Booking history:', response);
-            if (Array.isArray(response)) {
-              this.employeeBookings = response; // If response is an array
+          next: (response:any) => {
+            console.log('Booking history:', response.details);
+            if (response && response.details) {
+              this.employeeBookings = response.details; // If response is an array
             } else {
               // Assuming the response is a single object, wrap it in an array
               this.employeeBookings = [response];
@@ -99,7 +100,7 @@ viewBookingHistory() {
   logout() {
     // Clear session or perform logout actions
     console.log('Logging out');
-    this.router.navigate(['/admin-login']); 
+    this.router.navigate(['/home']); 
   }
   //dashboard
   //navigate to admin dashboard

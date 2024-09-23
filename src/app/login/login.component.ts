@@ -18,8 +18,8 @@ export class LoginComponent {
   username:any;
   userid:any;
 
-  private apiUrl = 'http://localhost:5121/User/Login';      //change url 
-   private apiUrl1 = 'http://localhost:5121/User/User_Id';  //change url
+  private apiUrl = 'https://localhost:5121/User/Login';      //change url 
+   private apiUrl1 = 'https://localhost:5121/User/User_Id';  //change url
 
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
@@ -54,7 +54,7 @@ onSubmit(){
   };
   if (this.loginForm.valid) {
     this.userid=addloginrequest.User_Id;
-    this.http.post('http://localhost:5121/User/Login', addloginrequest).subscribe({           //change url
+    this.http.post('http://localhost:5121/User/login', addloginrequest).subscribe({           //change url
       next: (value) => {
         
        
@@ -70,7 +70,3 @@ onSubmit(){
     };
   
   
-
-
-
-

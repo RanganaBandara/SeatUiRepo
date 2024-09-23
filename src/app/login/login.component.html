@@ -1,10 +1,21 @@
 <div class="body">
+  <header class="home-header">
+    <nav class="navbar">
+        <a href="/register" class="nav-link">Register</a>
+        <!-- <a href="/admin-login" class="nav-link">Admin Login</a> -->
+        <a href="/admin-login" class="nav-link">Admin Login</a>
+
+        <a href="/home" class="nav-link">Home</a>
+    </nav>
+   
+</header>
+<br>
   <div class="container-wrapper">
   
       <!--div class="image-container">
       <img src="assets/seat.jpg" alt="Seat Image">
       </div-->
-  
+ 
       <div class="login-form-container">
         <form class="login-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           
@@ -29,8 +40,9 @@
           </div>
   
           <button type="submit" class="login-btn" (click)="onLogin()">Login</button>
+          <h5>Don't have an account? Please Register.</h5>
           <button type="button" class="register-btn" (click)="onRegister()">Register</button>
-          <button type="button" class="home-btn" (click)="onHome()">Home</button>
+          <!--button type="button" class="home-btn" (click)="onHome()">Home</button-->
   
         </form>
       </div>

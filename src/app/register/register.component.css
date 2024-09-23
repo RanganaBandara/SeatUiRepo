@@ -10,7 +10,8 @@ body, html {
 }
 .body{
 
-  background-image: url('/assets/background.jpg');
+  background-image: url('/assets/seatblur.jpg');
+  background-size: cover;
 }
 
 .container-wrapper {
@@ -127,5 +128,40 @@ form {
     font-size: 14px;
   }
   
+/* Header styles */
+.home-header {
+  position: absolute; /* Position header absolutely to move it out of the flex column */
+   /* Adjust this value to position the header from the top */
+  width: 100%; /* Ensure header spans the full width */
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  background-color:#495057;
+  padding-top: 20px;
+}
 
+.home-header h1 {
+  font-size: 2.5em;
+  margin: 20px 0; /* Margin for spacing between elements */
+}
+
+/* Navigation bar styling */
+.navbar {
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Full width of the header */
+  margin-bottom: 20px; /* Space below the navbar */
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2em;
+  margin: 0 15px;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #ff6f61;
+}
   

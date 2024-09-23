@@ -42,7 +42,7 @@ export class AdminLoginComponent {
   }
   onLogin(): void {
     this.router.navigate(['/admin-dashboard']);
-    this.notificationService.showSuccess('Login successful!'); // Show success message
+    console.log('Login successful!'); // Show success message
   }
 
   /*This onsubmit method is for when data comming from the backend
@@ -75,11 +75,11 @@ export class AdminLoginComponent {
           this.onLogin(); // Navigate to admin dashboard
         } else {
           console.error('Invalid credentials');
-          this.notificationService.showError('Invalid email or password!'); // Show error message
+          //this.notificationService.showError('Invalid email or password!'); // Show error message
         }
       } else {
         console.error('Form is invalid');
-        this.notificationService.showError('Please fill out the form correctly!'); // Show form invalid message
+        //this.notificationService.showError('Please fill out the form correctly!'); // Show form invalid message
       }
     }
 ////////////////////////////////////

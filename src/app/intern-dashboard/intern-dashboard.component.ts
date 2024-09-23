@@ -22,6 +22,8 @@ export class InternDashboardComponent {
   isSubmitting: boolean = false;
   Id:any;
   username:any;
+  userid:any;
+  name:any;
 
   bookingForm: FormGroup;
 
@@ -33,19 +35,25 @@ export class InternDashboardComponent {
   constructor(private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.Id = params['userid'];
+      this.userid=this.Id;
       console.log(this.Id);
-      this.http.get(`https://localhost:7138/User/User_Id${this.Id}`).subscribe({     //change url
-         next: (value) => {
-        if (value !=null) {
-            this.username = value; // Access the name property directly
+      this.http.get(`http://localhost:5121/User/User_Id/${this.Id}`).subscribe(
+        (response: any) => {
+          if (response && response.name) {
+            // Directly assign the name to username
+            this.username = response.name;
+          } else {
+            // Handle the case where the response is null
+          }
+        },
+        error => {
+          // Handle any errors here
+          console.error('Error fetching user:', error);
         }
-        else{
-          this.username="ran";
-        }
-    }});
-    })
-       // Get the login ID from the route parameters
-    
+      );
+    });
+  
+  
       
      
     this.seats = Array.from({ length: 20 }, (_, i) => ({
@@ -86,8 +94,9 @@ export class InternDashboardComponent {
   
       // Prepare the booking data to send to the backend
       const bookingData = {
-        EmployeeName: this.bookingForm.get('employeeName')?.value,
-        EmployeeId: this.bookingForm.get('employeeId')?.value,
+        EmployeeName: this.username,
+        User_Id: this.userid,
+      
         
         ReservationDate: selectedDateStr, // Include the date in the booking data
         SeatNumber: this.selectedSeat.number
@@ -96,7 +105,7 @@ export class InternDashboardComponent {
       // Send the booking data to the backend API
       
       console.log(bookingData);
-      this.http.post('https://localhost:7138/api/Seats/Reserve', bookingData).subscribe({      //change url
+      this.http.post('http://localhost:5121/api/Seats/Reserve', bookingData).subscribe({      //change url
         
         next: (response) => {
           

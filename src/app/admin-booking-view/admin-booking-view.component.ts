@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 interface Booking {
   reservationId:number;
   seatNumber: number;
-  employeeId: string;
+  user_Id: string;
   employeeName: string;
   reservationDate: string;
 }

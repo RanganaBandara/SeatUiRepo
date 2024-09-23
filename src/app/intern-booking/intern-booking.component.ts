@@ -36,8 +36,8 @@ export class InternBookingComponent  implements OnInit {
   bookings: Booking[] = [];
 
   private apiUrl = 'https://localhost:7138/api/Seats'; // Replace with your actual API endpoint
-  private flturl='https://localhost:7138/api/Seats/Filtering/{dt}';
-  private dlturl='https://localhost:7138/api/Seats/CancelReservation/{id}';
+  private flturl='https://localhost:7138/api/Seats/Filtering/{dt}';        //change url
+  private dlturl='https://localhost:7138/api/Seats/CancelReservation/{id}';    //change url
 
   
 
@@ -71,7 +71,7 @@ export class InternBookingComponent  implements OnInit {
      console.log(selectedDateStr);
     if (selectedDateStr!=null) {
       
-      this.http.get<Booking[]>(`https://localhost:7138/api/Seats/Filtering/${selectedDateStr}`).subscribe(
+      this.http.get<Booking[]>(`https://localhost:7138/api/Seats/Filtering/${selectedDateStr}`).subscribe(    //change url
         data => {
           this.bookings = data;
           console.log(data);
@@ -90,7 +90,7 @@ export class InternBookingComponent  implements OnInit {
   cancelBooking(booking: Booking): void {
     const confirmation = confirm(`Are you sure you want to cancel the booking for seat ${booking.seatNumber}?`);
     if (confirmation) {
-      this.http.delete(`https://localhost:7138/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(
+      this.http.delete(`https://localhost:7138/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(      //change url
         () => {
           this.bookings = this.bookings.filter(b => b !== booking);
           alert(`Booking for seat ${booking.seatNumber} has been canceled.`);
@@ -131,7 +131,7 @@ export class InternBookingComponent  implements OnInit {
   }
   //navigate to intern dashboard
   dashboard(): void {
-    this.router.navigate(['/intern-dashboard']);
+    this.router.navigate(['/intern-dashboard/:userid']);
   }
 
 }

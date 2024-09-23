@@ -34,7 +34,7 @@ export class InternDashboardComponent {
     this.route.params.subscribe(params => {
       this.Id = params['userid'];
       console.log(this.Id);
-      this.http.get(`https://localhost:7138/User/User_Id${this.Id}`).subscribe({
+      this.http.get(`https://localhost:7138/User/User_Id${this.Id}`).subscribe({     //change url
          next: (value) => {
         if (value !=null) {
             this.username = value; // Access the name property directly
@@ -96,7 +96,7 @@ export class InternDashboardComponent {
       // Send the booking data to the backend API
       
       console.log(bookingData);
-      this.http.post('https://localhost:7138/api/Seats/Reserve', bookingData).subscribe({
+      this.http.post('https://localhost:7138/api/Seats/Reserve', bookingData).subscribe({      //change url
         
         next: (response) => {
           
@@ -138,6 +138,6 @@ export class InternDashboardComponent {
   }
   //navigate to admin dashboard
   dashboard(): void {
-    this.router.navigate(['/intern-dashboard']);
+    this.router.navigate(['/intern-dashboard/:userid']);
   }
 }

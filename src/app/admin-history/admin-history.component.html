@@ -1,43 +1,4 @@
-<!--div class="admin-history-container">
-    <header class="admin-header">
-      <h1>Admin History</h1>
-      <p>Enter the employee ID to view booking history:</p>
-    </header>
-  
-    <Form to input employee 
-    <form [formGroup]="bookingHistoryForm" (ngSubmit)="fetchBookingHistory()">
-      <label for="employeeId">Employee ID:</label>
-      <input id="employeeId" formControlName="employeeId" type="text" />
-      <button type="submit" [disabled]="isLoading">Fetch Booking History</button>
-    </form>
-  
-    < Display booking history 
-    <div *ngIf="employeeBookings.length > 0">
-      <h2>Booking History for Employee ID: {{ bookingHistoryForm.get('employeeId')?.value }}</h2>
-      <table class="booking-history-table">
-        <thead>
-          <tr>
-            <th>Seat Number</th>
-            <th>Date</th>
-            <th>Booking Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let booking of employeeBookings">
-            <td>{{ booking.seatNumber }}</td>
-            <td>{{ booking.reservationDate }}</td>
-            <td>{{ booking.status }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  
-    <p *ngIf="!employeeBookings.length && !isLoading">No bookings found for this employee ID.</p>
-  </div-->
-
-  <div class="dashboard-container">
-
-    <!-- Left Navigation Panel -->
+<div class="dashboard-container">
     <nav class="sidebar">
       <h2>Admin Panel</h2>
       <ul>
@@ -48,7 +9,6 @@
       </ul>
     </nav>
   
-    <!-- Main Content Area -->
     <div class="main-content">
       <div class="admin-history-container">
         <header class="admin-header">
@@ -65,29 +25,28 @@
   
         <!-- Display booking history -->
         <div *ngIf="employeeBookings.length > 0">
-          <h2>Booking History for Employee ID: {{ bookingHistoryForm.get('employeeId')?.value }}</h2>
-          <table class="booking-history-table">
-            <thead>
-              <tr>
-                <th>Seat Number</th>
-                <th>Date</th>
-                <th>Booking Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let booking of employeeBookings">
-                <td>{{ booking.seatNumber }}</td>
-                <td>{{ booking.reservationDate }}</td>
-                <td>{{ booking.status }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+            <h2>Booking History for Employee ID: {{ bookingHistoryForm.get('employeeId')?.value }}</h2>
+            <table class="booking-history-table">
+              <thead>
+                <tr>
+                  <th>Seat Number</th>
+                  <th>Reservation ID</th>
+                  <th>Employee Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let booking of employeeBookings">
+                  <td>{{ booking.seatNumber || 'N/A' }}</td>
+                  <td>{{ booking.reservationId || 'N/A' }}</td>
+                  <td>{{ booking.employeeName || 'N/A' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
   
         <p *ngIf="!employeeBookings.length && !isLoading">No bookings found for this employee ID.</p>
       </div>
     </div>
-  
   </div>
-  
   

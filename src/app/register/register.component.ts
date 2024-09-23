@@ -16,12 +16,12 @@ import { __values } from 'tslib';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  private apiUrl = 'http://localhost:5121/User/Register';
+  private apiUrl = 'https://localhost:7138/User/Register';    //change url
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.registerForm = this.fb.group({
       Name: ['', [Validators.required]],
-      User_Id: ['', [Validators.required]],
+      User_Id: ['',[ Validators.required,Validators.pattern('^[0-9]*$')]],
      Email: ['', [Validators.required]],
      Password: ['', Validators.required],
       Phone_Number: ['',Validators.required]

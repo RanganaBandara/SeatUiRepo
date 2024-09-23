@@ -30,13 +30,13 @@ export class AdminHistoryComponent {
   }
 
   // Method to fetch booking history from the backend API
-  fetchBookingHistory() {
+  /*fetchBookingHistory() {
     if (this.bookingHistoryForm.valid) {
       const employeeId = this.bookingHistoryForm.get('employeeId')?.value;
       this.isLoading = true;
 
       // Send GET request to backend API with employeeId
-      this.http.get<any[]>(`'http://localhost:5121/api/Seats/rsedeatils/${employeeId}`).subscribe({
+      this.http.get<any[]>(`http://localhost:5121/api/Seats/rsedeatils/${employeeId}`).subscribe({
         next: (response) => {
           console.log('Booking history:', response);
           this.employeeBookings = response; // Store the fetched booking history in the component
@@ -52,7 +52,40 @@ export class AdminHistoryComponent {
     } else {
       alert('Please enter a valid Employee ID.');
     }
-  }
+  }*/
+    fetchBookingHistory() {
+      if (this.bookingHistoryForm.valid) {
+        const employeeId = this.bookingHistoryForm.get('employeeId')?.value;
+        this.isLoading = true;
+    
+        // Send GET request to backend API with employeeId
+        this.http.get<any[]>(`http://localhost:5121/api/Seats/rsedeatils/${employeeId}`).subscribe({
+          next: (response) => {
+            console.log('Booking history:', response);
+            if (Array.isArray(response)) {
+              this.employeeBookings = response; // If response is an array
+            } else {
+              // Assuming the response is a single object, wrap it in an array
+              this.employeeBookings = [response];
+            }
+          },
+          error: (error) => {
+            console.error('Failed to fetch booking history:', error);
+            alert('Failed to retrieve booking history. Please try again.');
+          },
+          complete: () => {
+            this.isLoading = false; // Set loading state to false once the data is received
+          }
+        });
+      } else {
+        alert('Please enter a valid Employee ID.');
+      }
+    }
+    
+
+
+
+
 // Method to navigate to the bookings page
 viewBookings() {
   this.router.navigate(['/admin-booking']);
@@ -68,7 +101,7 @@ viewBookingHistory() {
     console.log('Logging out');
     this.router.navigate(['/admin-login']); 
   }
-  
+  //dashboard
   //navigate to admin dashboard
   dashboard(): void {
     this.router.navigate(['/admin-dashboard']);

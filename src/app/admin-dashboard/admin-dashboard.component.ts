@@ -53,7 +53,7 @@ export class AdminDashboardComponent {
   private notificationService = inject(NotificationService);
 
   selectedDate: string = ''; // To hold the selected date
-  totalSeats: number = 50; // Default total seats, can be changed based on API response
+  totalSeats: number = 20; // Default total seats, can be changed based on API response
   bookedSeats: number = 0; // Number of booked seats
   availableSeats: number = 0; // Number of available seats
 
@@ -84,7 +84,9 @@ export class AdminDashboardComponent {
     this.selectedDate = event.target.value; // Get selected date from date picker
     this.fetchSeatInfo(this.selectedDate).subscribe(
       (seatData: any) => {
-        this.bookedSeats = seatData.bookedSeats;
+        console.log(seatData);
+        seatData=parseInt(seatData);
+        this.bookedSeats = seatData;
         this.availableSeats = this.totalSeats - this.bookedSeats;
       },
       (error) => {
@@ -95,7 +97,7 @@ export class AdminDashboardComponent {
 
   // API call to fetch seat information for the selected date
   fetchSeatInfo(date: string): Observable<any> {
-    const url = `http://localhost:5121/seats?date=${date}`;
+    const url = `http://localhost:5121/api/Seats/count/10`;
     return this.http.get(url);
   }
 }

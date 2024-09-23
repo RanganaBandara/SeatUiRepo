@@ -4,14 +4,14 @@
       <p>Enter the employee ID to view booking history:</p>
     </header>
   
-    <!-- Form to input employee 
+    <Form to input employee 
     <form [formGroup]="bookingHistoryForm" (ngSubmit)="fetchBookingHistory()">
       <label for="employeeId">Employee ID:</label>
       <input id="employeeId" formControlName="employeeId" type="text" />
       <button type="submit" [disabled]="isLoading">Fetch Booking History</button>
     </form>
   
-    <!-- Display booking history 
+    < Display booking history 
     <div *ngIf="employeeBookings.length > 0">
       <h2>Booking History for Employee ID: {{ bookingHistoryForm.get('employeeId')?.value }}</h2>
       <table class="booking-history-table">

@@ -36,7 +36,7 @@ export class AdminHistoryComponent {
       this.isLoading = true;
 
       // Send GET request to backend API with employeeId
-      this.http.get<any[]>(`'http://localhost:5121/api/Seats/rsedeatils/${employeeId}`).subscribe({
+      this.http.get<any[]>(`http://localhost:5121/api/Seats/rsedeatils/${employeeId}`).subscribe({
         next: (response) => {
           console.log('Booking history:', response);
           this.employeeBookings = response; // Store the fetched booking history in the component

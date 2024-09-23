@@ -14,10 +14,13 @@
    <div class="main-content">
      
      <!-- Date Picker -->
-     <div class="date-picker-section">
-       <h2>Select a Date</h2>
-       <input type="date" (change)="onDateChange($event)" />
-     </div>
+     <mat-form-field>
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
  
      <!-- Seat Information Cards -->
      <div class="seat-info">
@@ -40,6 +43,6 @@
      
      <!-- Image -->
      <!--img src="/assets/seat.jpg" alt="Seat" class="seat-image"-->
-   </div>
+   
  
- </div>
+ 

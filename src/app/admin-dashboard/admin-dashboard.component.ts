@@ -37,11 +37,19 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NotificationService } from '../services/notification.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { event } from 'jquery';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],  // Import HttpClientModule here
+  imports: [CommonModule, HttpClientModule, MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule],  // Import HttpClientModule here
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css']
 })
@@ -52,12 +60,18 @@ export class AdminDashboardComponent {
   private http = inject(HttpClient);
   private notificationService = inject(NotificationService);
 
+  selectedDateStr:string='';
   selectedDate: string = ''; // To hold the selected date
   totalSeats: number = 20; // Default total seats, can be changed based on API response
   bookedSeats: number = 0; // Number of booked seats
   availableSeats: number = 0; // Number of available seats
+  cnt:any;
 
   constructor() {}
+  ngOnInit(): void {
+    this.onDateChange(event);
+  
+  }
 //-------------------------------------------------
   // Logout the user and navigate to the login page
   logout(): void {
@@ -81,14 +95,23 @@ export class AdminDashboardComponent {
 //--------------------------------------------------
   // Fetch seat data based on the selected date
   onDateChange(event: any): void {
-    this.selectedDate = event.target.value; // Get selected date from date picker
-    this.fetchSeatInfo(this.selectedDate).subscribe(
-      (seatData: any) => {
-        console.log(seatData);
-        seatData=parseInt(seatData);
+    const selectedDate = event.value;
+    const selectedDateStr = new Date(selectedDate).toDateString(); // Get selected date from date picker
+    console.log(selectedDateStr);
+    this.fetchSeatInfo(selectedDateStr).subscribe(
+      (response: any) => {
+        if (response && response.cnt) {
+        console.log(response.cnt);
+        const seatData=parseInt(response.cnt);
         this.bookedSeats = seatData;
         this.availableSeats = this.totalSeats - this.bookedSeats;
-      },
+        console.log(this.availableSeats);
+       } 
+      else{
+        this.availableSeats=20;
+        this.bookedSeats=0;
+        this.totalSeats=20;
+      }},
       (error) => {
         this.notificationService.showError('Error fetching seat information');
       }
@@ -97,7 +120,7 @@ export class AdminDashboardComponent {
 
   // API call to fetch seat information for the selected date
   fetchSeatInfo(date: string): Observable<any> {
-    const url = `http://localhost:5121/api/Seats/count/10`;
+    const url = `http://localhost:5121/api/Seats/count/${date}`;
     return this.http.get(url);
   }
 }

@@ -104,7 +104,7 @@ export class InternDashboardComponent {
   
       // Send the booking data to the backend API
       
-      console.log(bookingData);
+      console.log(bookingData.ReservationDate);
       this.http.post('http://localhost:5121/api/Seats/Reserve', bookingData).subscribe({      //change url
         
         next: (response) => {

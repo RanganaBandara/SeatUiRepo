@@ -54,7 +54,7 @@ onSubmit(){
   };
   if (this.loginForm.valid) {
     this.userid=addloginrequest.User_Id;
-    this.http.post('https://localhost:7138/User/login', addloginrequest).subscribe({           //change url
+    this.http.post('http://localhost:5121/User/login', addloginrequest).subscribe({           //change url
       next: (value) => {
         
        

@@ -71,7 +71,7 @@ export class InternBookingComponent  implements OnInit {
      console.log(selectedDateStr);
     if (selectedDateStr!=null) {
       
-      this.http.get<Booking[]>(`https://localhost:7138/api/Seats/Filtering/${selectedDateStr}`).subscribe(    //change url
+      this.http.get<Booking[]>(`https://localhost:7138/api/Seats/rsedeatils/${selectedDateStr}`).subscribe(    //change url
         data => {
           this.bookings = data;
           console.log(data);

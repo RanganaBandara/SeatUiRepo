@@ -37,7 +37,7 @@ export class InternDashboardComponent {
       this.Id = params['userid'];
       this.userid=this.Id;
       console.log(this.Id);
-      this.http.get(`http://localhost:5121/User/User_Id/${this.Id}`).subscribe(
+      this.http.get(`https://localhost:7138/User/User_Id/${this.Id}`).subscribe(     //change url
         (response: any) => {
           if (response && response.name) {
             // Directly assign the name to username
@@ -105,7 +105,7 @@ export class InternDashboardComponent {
       // Send the booking data to the backend API
       
       console.log(bookingData.ReservationDate);
-      this.http.post('http://localhost:5121/api/Seats/Reserve', bookingData).subscribe({      //change url
+      this.http.post('https://localhost:7138/api/Seats/Reserve', bookingData).subscribe({      //change url
         
         next: (response) => {
           

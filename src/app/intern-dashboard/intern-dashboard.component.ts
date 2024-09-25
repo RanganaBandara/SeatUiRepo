@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Seat } from '../../models/internDashboard.model';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-intern-dashboard',
@@ -12,7 +13,7 @@ import { Seat } from '../../models/internDashboard.model';
   templateUrl: './intern-dashboard.component.html',
   styleUrls: ['./intern-dashboard.component.css']
 })
-export class InternDashboardComponent {
+export class InternDashboardComponent implements OnInit {
   
   seats: Seat[] = [];
   selectedDate: Date | null = null;
@@ -20,60 +21,56 @@ export class InternDashboardComponent {
   selectedSeat: Seat | null = null;
   showBookingForm: boolean = false;
   isSubmitting: boolean = false;
-  Id:any;
-  username:any;
-  userid:any;
-  name:any;
-
+  userId: number | null = null; // Ensure it's initialized
+  username: string | null = null; // Change to appropriate type
   bookingForm: FormGroup;
 
   private http = inject(HttpClient); // Inject HttpClient
   private router = inject(Router); // Inject Router
-  
-  
+  private userService = inject(UserService); // Inject UserService
 
   constructor(private route: ActivatedRoute) {
-    this.route.params.subscribe(params => {
-      this.Id = params['userid'];
-      this.userid=this.Id;
-      console.log(this.Id);
-      this.http.get(`https://localhost:7138/User/User_Id/${this.Id}`).subscribe(     //change url
+    // Initialize booking form here if needed
+    this.bookingForm = new FormGroup({});
+  }
+
+  ngOnInit() {
+    // Get the user ID from UserService
+    this.userId = this.userService.getUserId();
+
+    // Log the user ID to check if it's retrieved correctly
+    console.log('User ID in Dashboard:', this.userId);
+
+    if (this.userId !== null) {
+      // Make the API call to fetch user details using the user ID
+      this.http.get(`http://localhost:5121/User/User_Id/${this.userId}`).subscribe(
         (response: any) => {
           if (response && response.name) {
-            // Directly assign the name to username
-            this.username = response.name;
+            this.username = response.name; // Assign username from the response
           } else {
-            // Handle the case where the response is null
+            console.error('User response is null or malformed:', response);
           }
         },
         error => {
-          // Handle any errors here
           console.error('Error fetching user:', error);
         }
       );
-    });
-  
-  
-      
-     
+    } else {
+      console.error('User ID is null. Ensure the user is logged in.');
+    }
+
+    // Initialize seats
     this.seats = Array.from({ length: 20 }, (_, i) => ({
       number: i + 1,
       bookings: {},
       isAvailable: true
     }));
     this.filteredSeats = [...this.seats];
-
-    this.bookingForm = new FormGroup({
-      //employeeName: new FormControl('', Validators.required),
-      //employeeId: new FormControl('', Validators.required),
-      
-    });
   }
-  
+
   onDateChange() {
     if (this.selectedDate) {
       const selectedDateStr = new Date(this.selectedDate).toDateString();
-      console.log(selectedDateStr);
       this.filteredSeats = this.seats.filter(seat => !seat.bookings[selectedDateStr]);
     } else {
       this.filteredSeats = [...this.seats];
@@ -87,37 +84,22 @@ export class InternDashboardComponent {
 
   submitBooking() {
     this.isSubmitting = true;
-    console.log('Submit Booking Button Clicked');
-  
+
     if (this.bookingForm.valid && this.selectedSeat) {
-      const selectedDateStr = new Date(this.selectedDate!).toDateString(); // Use the selected date
-  
-      // Prepare the booking data to send to the backend
+      const selectedDateStr = new Date(this.selectedDate!).toDateString();
       const bookingData = {
         EmployeeName: this.username,
-        User_Id: this.userid,
-      
-        
-        ReservationDate: selectedDateStr, // Include the date in the booking data
+        User_Id: this.userId, // Use the userId variable directly
+        ReservationDate: selectedDateStr,
         SeatNumber: this.selectedSeat.number
       };
-  
-      // Send the booking data to the backend API
-      
-      console.log(bookingData.ReservationDate);
-      this.http.post('https://localhost:7138/api/Seats/Reserve', bookingData).subscribe({      //change url
-        
+
+      this.http.post('http://localhost:5121/api/Seats/Reserve', bookingData).subscribe({
         next: (response) => {
-          
           console.log('Booking successful:', response);
-          
-          
           alert('Booking confirmed successfully!');
-  
-          // Mark the seat as booked locally
           this.selectedSeat!.bookings[selectedDateStr] = true;
           this.onDateChange();
-  
           this.showBookingForm = false;
         },
         error: (error) => {
@@ -133,7 +115,7 @@ export class InternDashboardComponent {
       this.isSubmitting = false;
     }
   }
-  
+
   cancelBooking() {
     this.showBookingForm = false;
   }
@@ -145,8 +127,8 @@ export class InternDashboardComponent {
   viewBookings(): void {
     this.router.navigate(['/intern-booking']);
   }
-  //navigate to admin dashboard
+
   dashboard(): void {
-    this.router.navigate(['/intern-dashboard/:userid']);
+    this.router.navigate(['/intern-dashboard']);
   }
 }

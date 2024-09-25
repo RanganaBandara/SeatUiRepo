@@ -14,7 +14,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./intern-dashboard.component.css']
 })
 export class InternDashboardComponent implements OnInit {
-  
+  minDate: Date;
   seats: Seat[] = [];
   selectedDate: Date | null = null;
   filteredSeats: Seat[] = [];
@@ -32,6 +32,8 @@ export class InternDashboardComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     // Initialize booking form here if needed
     this.bookingForm = new FormGroup({});
+    this.minDate = new Date();
+    // Format to YYYY-MM-DD
   }
 
   ngOnInit() {
@@ -67,7 +69,9 @@ export class InternDashboardComponent implements OnInit {
     }));
     this.filteredSeats = [...this.seats];
   }
-
+  get formattedMinDate(): string {
+    return this.minDate.toISOString().split('T')[0];
+  }
   onDateChange() {
     if (this.selectedDate) {
       const selectedDateStr = new Date(this.selectedDate).toDateString();

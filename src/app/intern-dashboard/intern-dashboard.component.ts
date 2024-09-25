@@ -68,12 +68,28 @@ export class InternDashboardComponent implements OnInit {
     this.filteredSeats = [...this.seats];
   }
 
+  // onDateChange() {
+  //   if (this.selectedDate) {
+  //     const selectedDateStr = new Date(this.selectedDate).toDateString();
+  //     this.filteredSeats = this.seats.filter(seat => !seat.bookings[selectedDateStr]);
+  //   } else {
+  //     this.filteredSeats = [...this.seats];
+  //   }
+  // }
+  
   onDateChange() {
     if (this.selectedDate) {
       const selectedDateStr = new Date(this.selectedDate).toDateString();
-      this.filteredSeats = this.seats.filter(seat => !seat.bookings[selectedDateStr]);
+  
+      // Filter seats based on whether they are booked for the selected date
+      this.filteredSeats = this.seats.map(seat => {
+        return {
+          ...seat,
+          isAvailable: !seat.bookings[selectedDateStr] // If seat has booking for the date, mark as unavailable
+        };
+      });
     } else {
-      this.filteredSeats = [...this.seats];
+      this.filteredSeats = [...this.seats]; // Reset to all seats if no date is selected
     }
   }
   
@@ -84,22 +100,31 @@ export class InternDashboardComponent implements OnInit {
 
   submitBooking() {
     this.isSubmitting = true;
-
-    if (this.bookingForm.valid && this.selectedSeat) {
-      const selectedDateStr = new Date(this.selectedDate!).toDateString();
+  
+    if (this.bookingForm.valid && this.selectedSeat && this.selectedDate) {
+      const selectedDateStr = new Date(this.selectedDate).toDateString();
+  
+      // Check if the seat is already booked for the selected date
+      if (this.selectedSeat.bookings[selectedDateStr]) {
+        alert('This seat is already booked for the selected date.');
+        this.isSubmitting = false;
+        return; // Prevent further submission if the seat is already booked
+      }
+  
+      // Proceed with booking submission if the seat is available
       const bookingData = {
         EmployeeName: this.username,
-        User_Id: this.userId, // Use the userId variable directly
+        User_Id: this.userId,
         ReservationDate: selectedDateStr,
         SeatNumber: this.selectedSeat.number
       };
-
+  
       this.http.post('http://localhost:5121/api/Seats/Reserve', bookingData).subscribe({
         next: (response) => {
           console.log('Booking successful:', response);
           alert('Booking confirmed successfully!');
-          this.selectedSeat!.bookings[selectedDateStr] = true;
-          this.onDateChange();
+          this.selectedSeat!.bookings[selectedDateStr] = true; // Mark the seat as booked for the selected date
+          this.onDateChange(); // Refresh seat availability
           this.showBookingForm = false;
         },
         error: (error) => {
@@ -115,6 +140,40 @@ export class InternDashboardComponent implements OnInit {
       this.isSubmitting = false;
     }
   }
+  
+  // submitBooking() {
+  //   this.isSubmitting = true;
+
+  //   if (this.bookingForm.valid && this.selectedSeat) {
+  //     const selectedDateStr = new Date(this.selectedDate!).toDateString();
+  //     const bookingData = {
+  //       EmployeeName: this.username,
+  //       User_Id: this.userId, // Use the userId variable directly
+  //       ReservationDate: selectedDateStr,
+  //       SeatNumber: this.selectedSeat.number
+  //     };
+
+  //     this.http.post('http://localhost:5121/api/Seats/Reserve', bookingData).subscribe({
+  //       next: (response) => {
+  //         console.log('Booking successful:', response);
+  //         alert('Booking confirmed successfully!');
+  //         this.selectedSeat!.bookings[selectedDateStr] = true;
+  //         this.onDateChange();
+  //         this.showBookingForm = false;
+  //       },
+  //       error: (error) => {
+  //         console.error('Booking failed:', error);
+  //         alert('Booking failed. Please try again.');
+  //       },
+  //       complete: () => {
+  //         this.isSubmitting = false;
+  //       }
+  //     });
+  //   } else {
+  //     alert('Please fill out the form correctly.');
+  //     this.isSubmitting = false;
+  //   }
+  // }
 
   cancelBooking() {
     this.showBookingForm = false;

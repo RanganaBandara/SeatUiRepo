@@ -2,7 +2,13 @@
   <!-- Left Navigation Panel -->
   <nav class="sidebar">
    <h2>Intern Panel</h2>
-  
+   <ul>
+    <li (click)="dashboard()">Dashboard</li>
+    <li (click)="viewBookings()">View Bookings</li>
+    <!-- <li (click)="viewBookingHistory()">View Booking History</li> -->
+    <li (click)="logout()">Log Out</li>
+  </ul>
+
  </nav>
   <!-- Main Content Area -->
 <div class="intern-booking-view-container">
@@ -16,7 +22,7 @@
  <table class="bookings-table">
    <thead>
      <tr>
-       <th>Res_Id</th>
+       <!-- <th>Res_Id</th> -->
        <th>Seat Number</th>
       
        <th>Employee Name</th>
@@ -26,12 +32,14 @@
    </thead>
    <tbody>
      <tr *ngFor="let booking of bookings">
-       <td>{{ booking.reservationId }}</td>
+       <!-- <td>{{ booking.reservationId }}</td> -->
        <td>{{ booking.seatNumber }}</td>
        
        <td>{{ booking.employeeName }}</td>
        <td>{{ booking.reservationDate }}</td>
-       
+       <td>
+        <button (click)="cancelBooking(booking)">Cancel</button>
+      </td>
      </tr>
    </tbody>
  </table>

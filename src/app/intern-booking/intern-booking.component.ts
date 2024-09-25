@@ -38,9 +38,9 @@ export class InternBookingComponent  implements OnInit {
   userId:number|null=null;
   
 
-  private apiUrl = 'https://localhost:7138/api/Seats'; // Replace with your actual API endpoint
-  private flturl='https://localhost:7138/api/Seats/Filtering/{dt}';        //change url
-  private dlturl='https://localhost:7138/api/Seats/CancelReservation/{id}';    //change url
+  private apiUrl = 'http://localhost:5121/api/Seats'; // Replace with your actual API endpoint
+  private flturl='http://localhost:5121/api/Seats/Filtering/{dt}';        //change url
+  private dlturl='http://localhost:5121/api/Seats/CancelReservation/{id}';    //change url
 
   
 
@@ -59,6 +59,10 @@ export class InternBookingComponent  implements OnInit {
 
   fetchBookingHistory(employeeId:any) {
    
+
+      
+    
+
   
       // Send GET request to backend API with employeeId
       this.http.get<any[]>(`http://localhost:5121/api/Seats/rsedeatils/${employeeId}`).subscribe({
@@ -72,10 +76,7 @@ export class InternBookingComponent  implements OnInit {
             
           }
         },
-        error: (error) => {
-          console.error('Failed to fetch booking history:', error);
-          alert('Failed to retrieve booking history. Please try again.');
-        },
-      })}
-  }
- 
+        
+      })
+  
+    }}

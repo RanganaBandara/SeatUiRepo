@@ -24,6 +24,7 @@ export class InternDashboardComponent implements OnInit {
   userId: number | null = null; // Ensure it's initialized
   username: string | null = null; // Change to appropriate type
   bookingForm: FormGroup;
+  formattedMinDate: string;
 
   private http = inject(HttpClient); // Inject HttpClient
   private router = inject(Router); // Inject Router
@@ -33,6 +34,8 @@ export class InternDashboardComponent implements OnInit {
     // Initialize booking form here if needed
     this.bookingForm = new FormGroup({});
     this.minDate = new Date();
+    this.formattedMinDate = this.minDate.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+
     // Format to YYYY-MM-DD
   }
 

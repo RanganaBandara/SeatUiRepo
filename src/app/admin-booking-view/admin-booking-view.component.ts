@@ -7,15 +7,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
-import { data, event } from 'jquery';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 interface Booking {
-  reservationId:number;
+  reservationId: number;
   seatNumber: number;
   user_Id: string;
   employeeName: string;
-  reservationDate: string;
+  reservationDate: string; // Ensure this matches the date format you expect from the API
 }
 
 @Component({
@@ -37,14 +37,9 @@ interface Booking {
 export class AdminBookingViewComponent implements OnInit {
   bookingForm: FormGroup;
   bookings: Booking[] = [];
-
   private apiUrl = 'http://localhost:5121/api/Seats'; // Replace with your actual API endpoint
-  private flturl='http://localhost:5121/api/Seats/Filtering/{dt}';
-  private dlturl='http://localhost:5121/api/Seats/CancelReservation/{id}';
 
-  
-
-  constructor(private http: HttpClient, private fb: FormBuilder ,private router: Router) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private cdr: ChangeDetectorRef) {
     this.bookingForm = this.fb.group({
       selectedDate: [''] // Form control for selectedDate
     });
@@ -52,7 +47,6 @@ export class AdminBookingViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchBookings();
-  
   }
 
   fetchBookings(): void {
@@ -69,26 +63,32 @@ export class AdminBookingViewComponent implements OnInit {
 
   onDateChange(event: any): void {
     const selectedDate = event.value;
-    const selectedDateStr = new Date(selectedDate).toDateString();
-     // Make sure you're accessing the correct property here
-     console.log(selectedDateStr);
-    if (selectedDateStr!=null) {
-      
-      this.http.get<Booking[]>(`http://localhost:5121/api/Seats/Filtering/${selectedDateStr}`).subscribe(
+  
+    if (selectedDate) {
+      const options: Intl.DateTimeFormatOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+      const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', options).replace(/,/g, '');
+  
+      console.log(`Selected date: ${formattedDate}`);
+  
+      const apiUrl = `http://localhost:5121/api/Seats/Filtering/${formattedDate}`;
+      console.log(`Calling API with URL: ${apiUrl}`);
+  
+      this.http.get<Booking>(apiUrl).subscribe(
         data => {
-          this.bookings = data;
-          console.log(data);
-          
+          // Wrap the single booking object in an array
+          this.bookings = [data]; // Change from data to [data]
+          console.log('Filtered bookings:', this.bookings);
+          this.cdr.detectChanges(); // Ensure Angular detects changes
         },
         error => {
-          console.error('Error fetching bookings:', error);
+          console.error('Error fetching filtered bookings:', error);
         }
       );
     } else {
       this.fetchBookings();
     }
   }
-
+  
 
   cancelBooking(booking: Booking): void {
     const confirmation = confirm(`Are you sure you want to cancel the booking for seat ${booking.seatNumber}?`);
@@ -105,36 +105,19 @@ export class AdminBookingViewComponent implements OnInit {
     }
   }
 
-  //onSubmit(): void {
-    // You can use this method to submit the form data if needed
-   // const formData = this.bookingForm.value;
-   // console.log('Form submitted with data:', formData);
-    // Send formData to your backend or handle it accordingly
-  //}
-  //-------------------------------------------------
-  // Logout the user and navigate to the login page
   logout(): void {
     this.router.navigate(['/home']);
   }
-  
 
-  // Navigate to Manage Bookings page
-  //managebookings(): void {
-    //this.router.navigate(['/admin-booking']);
-  //}
-
-  // Navigate to View Booking History page
   viewBookingHistory(): void {
     this.router.navigate(['/admin-history']);
   }
 
-  // Navigate to View Bookings page
   viewBookings(): void {
     this.router.navigate(['/admin-booking']);
   }
-  //navigate to admin dashboard
+
   dashboard(): void {
     this.router.navigate(['/admin-dashboard']);
   }
-//--------------------------------------------------
 }

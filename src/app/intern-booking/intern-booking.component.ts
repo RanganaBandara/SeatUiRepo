@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { data, event } from 'jquery';
 import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 interface Booking {
   reservationId:number;
@@ -34,6 +35,8 @@ interface Booking {
 export class InternBookingComponent  implements OnInit {
   bookingForm: FormGroup;
   bookings: Booking[] = [];
+  userId:number|null=null;
+  
 
   private apiUrl = 'https://localhost:7138/api/Seats'; // Replace with your actual API endpoint
   private flturl='https://localhost:7138/api/Seats/Filtering/{dt}';        //change url
@@ -41,56 +44,59 @@ export class InternBookingComponent  implements OnInit {
 
   
 
-  constructor(private http: HttpClient, private fb: FormBuilder ,private router: Router) {
+  constructor(private http: HttpClient, private fb: FormBuilder ,private router: Router,private userService: UserService) {
     this.bookingForm = this.fb.group({
       selectedDate: [''] // Form control for selectedDate
     });
   }
 
   ngOnInit(): void {
-    this.fetchBookings();
+    this.userId = this.userService.getUserId();
+    this.fetchBookingHistory(this.userId);
+
   
   }
 
-  fetchBookings(): void {
-    this.http.get<Booking[]>(this.apiUrl).subscribe(
-      data => {
-        this.bookings = data;
-        console.log(data);
-      },
-      error => {
-        console.error('Error fetching bookings:', error);
-      }
-    );
-  }
-
-  onDateChange(event: any): void {
-    const selectedDate = event.value;
-    const selectedDateStr = new Date(selectedDate).toDateString();
-     // Make sure you're accessing the correct property here
-     console.log(selectedDateStr);
-    if (selectedDateStr!=null) {
-      
-      this.http.get<Booking[]>(`https://localhost:7138/api/Seats/Filtering/${selectedDateStr}`).subscribe(    //change url
-        data => {
-          this.bookings = data;
-          console.log(data);
-          
+  fetchBookingHistory(employeeId:any) {
+   
+  
+      // Send GET request to backend API with employeeId
+      this.http.get<any[]>(`http://localhost:5121/api/Seats/rsedeatils/${employeeId}`).subscribe({
+        next: (response:any) => {
+          console.log('Booking history:', response.details);
+          if (response && response.details) {
+            this.bookings=response.details;
+            // If response is an array
+          } else {
+            // Assuming the response is a single object, wrap it in an array
+            
+          }
         },
-        error => {
-          console.error('Error fetching bookings:', error);
-        }
-      );
-    } else {
-      this.fetchBookings();
-    }
+        error: (error) => {
+          console.error('Failed to fetch booking history:', error);
+          alert('Failed to retrieve booking history. Please try again.');
+        },
+      })}
+
+       // Logout the user and navigate to the login page
+  logout(): void {
+    this.router.navigate(['/home']);
+  }
+  
+  // Navigate to View Bookings page
+  viewBookings(): void {
+    this.router.navigate(['/intern-booking']);
   }
 
+  //navigate to intern dashboard
+  dashboard(): void {
+    this.router.navigate(['/intern-dashboard']);
+  }
 
   cancelBooking(booking: Booking): void {
     const confirmation = confirm(`Are you sure you want to cancel the booking for seat ${booking.seatNumber}?`);
     if (confirmation) {
-      this.http.delete(`https://localhost:7138/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(      //change url
+      this.http.delete(`http://localhost:5121/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(      //change url
         () => {
           this.bookings = this.bookings.filter(b => b !== booking);
           alert(`Booking for seat ${booking.seatNumber} has been canceled.`);
@@ -102,36 +108,6 @@ export class InternBookingComponent  implements OnInit {
     }
   }
 
-  //onSubmit(): void {
-    // You can use this method to submit the form data if needed
-   // const formData = this.bookingForm.value;
-   // console.log('Form submitted with data:', formData);
-    // Send formData to your backend or handle it accordingly
-  //}
-  //-------------------------------------------------
-  // Logout the user and navigate to the login page
-  logout(): void {
-    this.router.navigate(['/home']);
+
   }
-  
-
-  // Navigate to Manage Bookings page
-  //managebookings(): void {
-    //this.router.navigate(['/admin-booking']);
-  //}
-
-  // Navigate to View Booking History page
-  // viewBookingHistory(): void {
-  //   this.router.navigate(['/admin-history']);
-  // }
-
-  // Navigate to View Bookings page
-  viewBookings(): void {
-    this.router.navigate(['/intern-booking']);
-  }
-  //navigate to intern dashboard
-  dashboard(): void {
-    this.router.navigate(['/intern-dashboard/:userid']);
-  }
-
-}
+ 

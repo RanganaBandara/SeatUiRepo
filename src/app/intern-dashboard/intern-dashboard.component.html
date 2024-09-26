@@ -16,7 +16,9 @@
 
   <div class="date-picker-container">
     <label for="datePicker">Select Date:</label>
-    <input id="datePicker" type="date" [(ngModel)]="selectedDate" (change)="onDateChange()" />
+    <input id="datePicker" [min]="formattedMinDate" type="date" [(ngModel)]="selectedDate" (change)="onDateChange()" />
+    
+
   </div>
 
   <section class="seats-section">

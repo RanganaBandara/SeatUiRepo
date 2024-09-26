@@ -77,5 +77,37 @@ export class InternBookingComponent  implements OnInit {
           alert('Failed to retrieve booking history. Please try again.');
         },
       })}
+
+       // Logout the user and navigate to the login page
+  logout(): void {
+    this.router.navigate(['/home']);
+  }
+  
+  // Navigate to View Bookings page
+  viewBookings(): void {
+    this.router.navigate(['/intern-booking']);
+  }
+
+  //navigate to intern dashboard
+  dashboard(): void {
+    this.router.navigate(['/intern-dashboard']);
+  }
+
+  cancelBooking(booking: Booking): void {
+    const confirmation = confirm(`Are you sure you want to cancel the booking for seat ${booking.seatNumber}?`);
+    if (confirmation) {
+      this.http.delete(`http://localhost:5121/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(      //change url
+        () => {
+          this.bookings = this.bookings.filter(b => b !== booking);
+          alert(`Booking for seat ${booking.seatNumber} has been canceled.`);
+        },
+        error => {
+          console.error('Error canceling booking:', error);
+        }
+      );
+    }
+  }
+
+
   }
  

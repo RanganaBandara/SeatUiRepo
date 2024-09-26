@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Seat } from '../../models/internDashboard.model';
@@ -39,6 +39,7 @@ export class InternDashboardComponent implements OnInit {
   ngOnInit() {
     // Get the user ID from UserService
     this.userId = this.userService.getUserId();
+    
 
     // Log the user ID to check if it's retrieved correctly
     console.log('User ID in Dashboard:', this.userId);

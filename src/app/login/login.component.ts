@@ -61,16 +61,18 @@ onSubmit(){
     this.userid=addloginrequest.User_Id;
     this.http.post('http://localhost:5121/User/login', addloginrequest).subscribe({           //change url
       next: (value) => {
-        
+
+        console.log(value);
+        if(value!=null){
+          this.router.navigate(['/intern-dashboard'])
        
-             
-              this.router.navigate(['/intern-dashboard'])
+
+        }else{
+        this.notificationService.showError("Invalid Credentials or register please");
+        }    
             }
           })
-        }else{
-      this.notificationService.showError("Invalid Credentials or register please");
-      
-      }
+        }
       }
     };
   

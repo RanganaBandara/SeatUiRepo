@@ -23,20 +23,21 @@
   </div>
 
   <section class="seats-section">
-    <div class="seat-card" *ngFor="let seat of filteredSeats">
+    <div class="seat-card" *ngFor="let seat of seatNumbers">
       <div class="seat-info">
-        <span>Seat {{ seat.number }}</span>
-        <button *ngIf="seat.isAvailable" class="book-seat-btn" (click)="bookSeat(seat)">Book</button>
-        <span *ngIf="!seat.isAvailable" class="booked-text">Booked</span>
+        <span>Seat {{ seat }}</span>
+        <button  class="book-seat-btn" (click)="bookSeat(seat)">Book</button>
+        
       </div>
     </div>
   </section>
+  
 </div>
 
 <!-- Booking Form Modal -->
 <div *ngIf="showBookingForm" class="booking-form-modal">
   <div class="booking-form-content">
-    <h2>Book Seat {{ selectedSeat?.number }}</h2>
+    <h2>Book Seat {{ selectedSeat }}</h2>
     <form [formGroup]="bookingForm" (ngSubmit)="submitBooking()">
       <!-- Removed employeeId and employeeName fields -->
 

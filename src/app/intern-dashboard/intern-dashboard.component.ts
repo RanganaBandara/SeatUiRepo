@@ -5,6 +5,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Seat } from '../../models/internDashboard.model';
 import { UserService } from '../user.service';
+import { event } from 'jquery';
 
 @Component({
   selector: 'app-intern-dashboard',
@@ -15,15 +16,19 @@ import { UserService } from '../user.service';
 })
 export class InternDashboardComponent implements OnInit {
   minDate: Date;
+  seatnumbertdetails:any;
+  seatNumber:number|null=null;
   seats: Seat[] = [];
   selectedDate: Date | null = null;
   filteredSeats: Seat[] = [];
-  selectedSeat: Seat | null = null;
+  selectedSeat: number | null = null;
   showBookingForm: boolean = false;
   isSubmitting: boolean = false;
   userId: number | null = null; // Ensure it's initialized
   username: string | null = null; // Change to appropriate type
   bookingForm: FormGroup;
+  formattedMinDate: string;
+  seatNumbers: Seat[]=[];
 
   private http = inject(HttpClient); // Inject HttpClient
   private router = inject(Router); // Inject Router
@@ -33,6 +38,8 @@ export class InternDashboardComponent implements OnInit {
     // Initialize booking form here if needed
     this.bookingForm = new FormGroup({});
     this.minDate = new Date();
+    this.formattedMinDate = this.minDate.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+
     // Format to YYYY-MM-DD
   }
 
@@ -42,6 +49,8 @@ export class InternDashboardComponent implements OnInit {
 
     // Get the user ID from UserService
     this.userId = this.userService.getUserId();
+    this.initializeSeats();
+    
     
 
     // Log the user ID to check if it's retrieved correctly
@@ -66,14 +75,23 @@ export class InternDashboardComponent implements OnInit {
     }
 
     // Initialize seats
-    this.seats = Array.from({ length: 20 }, (_, i) => ({
-      number: i + 1,
-      bookings: {},
-      isAvailable: true
-    }));
-    this.filteredSeats = [...this.seats];
+   
   }
 
+  initializeSeats(): void {
+    this.http.get<Seat[]>(`http://localhost:5121/api/Seats/fetchseats`).subscribe({
+      next: (response:any) => {
+        console.log('Initial Seats:', response); // Log the initial response
+        this.seats = response.seatDetails.result; // Assign to seats
+        this.seatNumbers = this.seats; // Set seatNumbers directly for now
+        console.log('Seat Numbers:', this.seatNumbers); // Log to check
+      },
+      error: (error) => {
+        console.error('Error fetching seats:', error);
+      }
+    });
+  }
+  
   // onDateChange() {
   //   if (this.selectedDate) {
   //     const selectedDateStr = new Date(this.selectedDate).toDateString();
@@ -86,20 +104,29 @@ export class InternDashboardComponent implements OnInit {
   onDateChange() {
     if (this.selectedDate) {
       const selectedDateStr = new Date(this.selectedDate).toDateString();
+      console.log(selectedDateStr);
+      const options: Intl.DateTimeFormatOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+      const formattedDate = new Date(selectedDateStr).toLocaleDateString('en-US', options).replace(/,/g, '');
   
-      // Filter seats based on whether they are booked for the selected date
-      this.filteredSeats = this.seats.map(seat => {
-        return {
-          ...seat,
-          isAvailable: !seat.bookings[selectedDateStr] // If seat has booking for the date, mark as unavailable
-        };
+    
+      
+      this.http.get<Seat[]>(`http://localhost:5121/api/Seats/getseatnumbers/${selectedDateStr}`).subscribe({
+        next: (response:any) => {
+          console.log('API Response:', response); // Log the response to check structure
+          this.seats = response.seatnumbertdetails; // Assuming response is an array of Seat objects
+          this.seatNumbers = this.seats; // Filter available seats
+          console.log('Filtered Seat Numbers:', this.seatNumbers); // Check filtered results
+        },
+        error: (error) => {
+          console.error('Error fetching seats for selected date:', error);
+        }
       });
-    } else {
-      this.filteredSeats = [...this.seats]; // Reset to all seats if no date is selected
-    }
+    
   }
   
-  bookSeat(seat: Seat) {
+}
+  
+  bookSeat(seat:any) {
     this.selectedSeat = seat;
     this.showBookingForm = true;
   }
@@ -111,25 +138,21 @@ export class InternDashboardComponent implements OnInit {
       const selectedDateStr = new Date(this.selectedDate).toDateString();
   
       // Check if the seat is already booked for the selected date
-      if (this.selectedSeat.bookings[selectedDateStr]) {
-        alert('This seat is already booked for the selected date.');
-        this.isSubmitting = false;
-        return; // Prevent further submission if the seat is already booked
-      }
+     
   
       // Proceed with booking submission if the seat is available
       const bookingData = {
         EmployeeName: this.username,
         User_Id: this.userId,
         ReservationDate: selectedDateStr,
-        SeatNumber: this.selectedSeat.number
+        SeatNumber: this.selectedSeat
       };
   
       this.http.post('http://localhost:5121/api/Seats/Reserve', bookingData).subscribe({
         next: (response) => {
           console.log('Booking successful:', response);
           alert('Booking confirmed successfully!');
-          this.selectedSeat!.bookings[selectedDateStr] = true; // Mark the seat as booked for the selected date
+         
           this.onDateChange(); // Refresh seat availability
           this.showBookingForm = false;
         },

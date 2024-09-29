@@ -37,6 +37,9 @@ export class InternDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+
     // Get the user ID from UserService
     this.userId = this.userService.getUserId();
     

@@ -1,0 +1,60 @@
+
+  <!-- Profile Section at Top Right -->
+  <div class="top-right-profile">
+    <div class="profile-info">
+      <span class="intern-name">{{ internName }}</span>
+      <img [src]="profilePictureUrl" alt="Profile Picture" />
+    </div>
+  </div>
+<div class="dashboard-container">
+ 
+  <!-- Left Navigation Panel -->
+  <nav class="sidebar">
+    
+    <h2>Intern Panel</h2>
+    <ul>
+      <li (click)="dashboard()">Dashboard</li>
+      <li (click)="viewProfile()">View Profile</li>
+      <!--li (click)="editProfile()">Edit Profile</li-->
+      <li (click)="changePassword()">Change Password</li>
+      <li (click)="logout()">Log Out</li>
+    </ul>
+  </nav>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+       <!-- Profile Picture Section at Top Right -->
+       <div class="top-right-profile">
+        <img [src]="profilePictureUrl" alt="Profile Picture" />
+      </div>
+    <h3>Intern Profile Information</h3>
+
+    <!-- View Profile Information -->
+    <div *ngIf="!isEditing">
+      <p><strong>Name:</strong> {{ profileForm.value.name }}</p>
+      <p><strong>Email:</strong> {{ profileForm.value.email }}</p>
+      <p><strong>Phone:</strong> {{ profileForm.value.phone }}</p>
+      <button (click)="enableEdit()">Edit Profile</button>
+    </div>
+
+    <!-- Edit Profile Form -->
+    <div class="profile-container">
+      <label for="profilePicture">Upload Profile Picture</label>
+      <input type="file" id="profilePicture" (change)="onFileSelected($event)">
+      <button (click)="uploadProfilePicture()">Upload</button>
+    </div>
+    
+    <form [formGroup]="profileForm" *ngIf="isEditing">
+      <label for="name">Name:</label>
+      <input type="text" id="name" formControlName="name">
+      
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+      
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" formControlName="phone">
+      
+      <button (click)="saveChanges()">Save Changes</button>
+    </form>
+  </div>
+</div>

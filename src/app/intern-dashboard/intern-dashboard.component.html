@@ -1,4 +1,5 @@
 <div class="full">
+  
   <nav class="sidebar">
     <h2>Intern Panel</h2>
     <ul>
@@ -16,7 +17,7 @@
 
   <div class="date-picker-container">
     <label for="datePicker">Select Date:</label>
-    <input id="datePicker" [min]="formattedMinDate" type="date" [(ngModel)]="selectedDate" (change)="onDateChange()" />
+    <input id="datePicker" [min]="minDate" type="date" [(ngModel)]="selectedDate" (change)="onDateChange()" />
     
 
   </div>

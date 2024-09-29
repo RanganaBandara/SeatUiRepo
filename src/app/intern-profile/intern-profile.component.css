@@ -1,0 +1,98 @@
+
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-image: url('/assets/seatblur.jpg');
+  background-size: cover;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 250px;
+  background-color: #343a40;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.sidebar h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #495057;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar ul li:hover {
+  background-color: #007bff;
+}
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-image: url('/assets/seatblur.jpg');
+  background-size: cover;
+  position: relative;
+}
+
+/* Main Content Styling */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  margin: 60px;
+  position: relative;
+}
+
+/* Profile Picture Styling */
+.top-right-profile {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+}
+
+.top-right-profile img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+
+

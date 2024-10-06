@@ -8,8 +8,8 @@ import { AdminBookingViewComponent } from './admin-booking-view/admin-booking-vi
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminHistoryComponent } from './admin-history/admin-history.component';
 import { InternBookingComponent } from './intern-booking/intern-booking.component';
-//import { InternProfileComponent } from './intern-profile/intern-profile.component';
-
+import { InternProfileComponent } from './intern-profile/intern-profile.component';
+import { AttendanceManagementComponent } from './attendance-management/attendance-management.component';
 //import { ForgetPasswordComponent } from './forgot-password/forgot-password.component';
 //import { VerifyCodeComponent } from './verify-code/verify-code.component';
 
@@ -25,8 +25,8 @@ export const routes: Routes = [
   {path:'admin-login',component:AdminLoginComponent},   
   {path:'admin-history',component:AdminHistoryComponent},
   {path:'intern-booking',component:InternBookingComponent},
-  //{path:'intern-profile',component:InternProfileComponent},
-
+  {path:'intern-profile',component:InternProfileComponent},
+  {path:'attendance',component:AttendanceManagementComponent},
   
  // { path: 'forgot-password', component: ForgetPasswordComponent },
   //{ path: 'verify-code', component: VerifyCodeComponent },

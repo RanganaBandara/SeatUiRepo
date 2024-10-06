@@ -1,0 +1,98 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+      <li (click)="dashboard()">Dashboard</li>
+      <li (click)="viewBookings()">View Bookings</li>
+      <li (click)="viewBookingHistory()">View Booking History</li>
+      <li (click)="attendence()">Attendance</li>
+      <li (click)="logout()">Log Out</li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="attendance-management-container">
+      <h1>Attendance Management</h1>
+      
+      <!-- Existing Attendance Section -->
+      <section *ngIf="bookings.length > 0">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>Seat Number</th>
+              <th>Employee Name</th>
+              <th>Reservation Date</th>
+              <th>Attendance</th>
+            </tr>
+           <br>
+          </thead>
+          <ng-container *ngFor="let booking of bookings">
+            <tr *ngIf="!booking.attendanceMarked">
+              <td>{{ booking.seatNumber }}</td>
+              <td>{{ booking.employeeName }}</td>
+              <td>{{ booking.reservationDate }}</td>
+              <button (click)="markAttendance(booking.reservationId, true, booking.user_Id, booking.employeeName)"
+        *ngIf="isAdmin && !booking.attendanceMarked"
+        class="btn-present"
+        [disabled]="booking.attendanceMarked">Present</button>
+
+<button (click)="promptReason(booking.reservationId)"
+        *ngIf="isAdmin && !booking.attendanceMarked"
+        class="btn-absent"
+        [disabled]="booking.attendanceMarked">Absent</button>
+
+            </tr>
+          </ng-container>
+        </table>
+      </section>
+
+      <section *ngIf="bookings.length === 0">
+        <p>No bookings found for the selected date.</p>
+      </section>
+
+      <!-- Advanced Settings Section -->
+      <div class="advanced-settings">
+        <h2>Advanced Settings</h2>
+        <section *ngIf="markedAttendances.length > 0">
+          <h3>Marked Attendances</h3>
+          <table class="marked-attendances-table">
+            <thead>
+              <tr>
+                <th>Seat Number</th>
+                <th>Employee Name</th>
+                <th>Reservation Date</th>
+                <th>Correct Attendance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let attendance of markedAttendances">
+                <tr>
+                  <td>{{ attendance.seatNumber }}</td>
+                  <td>{{ attendance.employeeName }}</td>
+                  <td>{{ attendance.reservationDate }}</td>
+                  <td>
+                    <button (click)="markAttendance(attendance.reservationId, true, attendance.user_Id, attendance.employeeName)"
+                      *ngIf="isAdmin && !attendance.attendanceMarked"
+                      class="btn-present"
+                      [disabled]="attendance.attendanceMarked">Present</button>
+                  
+                    <button (click)="promptReason(attendance.reservationId)"
+                      *ngIf="isAdmin && !attendance.attendanceMarked"
+                      class="btn-absent"
+                      [disabled]="attendance.attendanceMarked">Absent</button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </section>
+
+        <section *ngIf="markedAttendances.length === 0">
+          <p>No marked attendances to correct.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

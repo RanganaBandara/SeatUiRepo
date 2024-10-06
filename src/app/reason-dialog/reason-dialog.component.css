@@ -1,0 +1,93 @@
+/* Set a max width for the dialog and add box shadow for better focus */
+mat-dialog-content {
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #ffffff;
+  }
+  
+  /* Style the dialog title */
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  
+  /* Style for the form fields */
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Mat-select dropdown styling */
+  mat-select {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+  }
+  
+  mat-option {
+    color: #00796b;
+  }
+  
+  mat-select::ng-deep .mat-select-value-text {
+    color: #333;
+  }
+  
+  /* Input field inside mat-form-field */
+  input[matInput] {
+    font-size: 14px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+  }
+  
+  input[matInput]::placeholder {
+    color: #999;
+  }
+  
+  /* Style for dialog actions */
+  mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  /* Button styles with background color, hover, and padding */
+  button[mat-button] {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #00796b;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[mat-button]:hover {
+    background-color: #005a4f;
+  }
+  
+  /* Cancel button - a bit lighter for contrast */
+  button[mat-button].cancel-button {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  button[mat-button].cancel-button:hover {
+    background-color: #b0b0b0;
+  }
+  
+  /* Spacing and padding for better layout */
+  mat-dialog-content {
+    padding: 25px;
+    border-radius: 6px;
+  }
+  

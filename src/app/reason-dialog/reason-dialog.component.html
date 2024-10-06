@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Reason for Absence</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Reason</mat-label>
+    <mat-select [(ngModel)]="reason">
+      <mat-option *ngFor="let predefinedReason of predefinedReasons" [value]="predefinedReason">
+        {{ predefinedReason }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Custom Reason (optional)</mat-label>
+    <input matInput [(ngModel)]="reason" placeholder="Type your reason here..." />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button class="cancel-button" (click)="cancel()">Cancel</button>
+  <button mat-button (click)="submit()">Submit</button>
+</mat-dialog-actions>

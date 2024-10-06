@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-admin-history',
   standalone: true,
@@ -106,5 +107,9 @@ viewBookingHistory() {
   //navigate to admin dashboard
   dashboard(): void {
     this.router.navigate(['/admin-dashboard']);
+  }
+
+  attendence(): void {
+    this.router.navigate(['/attendance']);
   }
 }

@@ -90,7 +90,7 @@ export class AdminBookingViewComponent implements OnInit {
   }
   
 
-  cancelBooking(booking: Booking): void {
+ /* cancelBooking(booking: Booking): void {
     const confirmation = confirm(`Are you sure you want to cancel the booking for seat ${booking.seatNumber}?`);
     if (confirmation) {
       this.http.delete(`http://localhost:5121/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(
@@ -103,7 +103,32 @@ export class AdminBookingViewComponent implements OnInit {
         }
       );
     }
-  }
+  }*/
+    cancelBooking(booking: Booking): void {
+      // Parse the reservation date
+      const bookingDate = new Date(booking.reservationDate);
+      const today = new Date();
+    
+      // Check if the booking date is in the future
+      if (bookingDate < today) {
+        alert('Cannot cancel bookings for past dates.');
+        return; // Exit the function without performing the cancellation
+      }
+    
+      const confirmation = confirm(`Are you sure you want to cancel the booking for seat ${booking.seatNumber}?`);
+      if (confirmation) {
+        this.http.delete(`http://localhost:5121/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(
+          () => {
+            this.bookings = this.bookings.filter(b => b !== booking);
+            alert(`Booking for seat ${booking.seatNumber} has been canceled.`);
+          },
+          error => {
+            console.error('Error canceling booking:', error);
+          }
+        );
+      }
+    }
+    
 
   logout(): void {
     this.router.navigate(['/home']);
@@ -119,5 +144,9 @@ export class AdminBookingViewComponent implements OnInit {
 
   dashboard(): void {
     this.router.navigate(['/admin-dashboard']);
+  }
+
+  attendence(): void {
+    this.router.navigate(['/attendance']);
   }
 }

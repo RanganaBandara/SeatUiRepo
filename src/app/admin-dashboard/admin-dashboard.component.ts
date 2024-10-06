@@ -92,6 +92,10 @@ export class AdminDashboardComponent {
   viewBookings(): void {
     this.router.navigate(['/admin-booking']);
   }
+
+  attendence(): void {
+    this.router.navigate(['/attendance']);
+  }
 //--------------------------------------------------
   // Fetch seat data based on the selected date
   onDateChange(event: any): void {

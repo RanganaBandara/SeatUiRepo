@@ -138,23 +138,32 @@ export class AdminBookingViewComponent implements OnInit {
     }
     
 
+  //-------------------------------------------------
+  // Logout the user and navigate to the login page
   logout(): void {
     this.router.navigate(['/home']);
   }
 
+  // Navigate to Manage Bookings page
+  //managebookings(): void {
+    //this.router.navigate(['/admin-booking']);
+  //}
+
+  // Navigate to View Booking History page
   viewBookingHistory(): void {
     this.router.navigate(['/admin-history']);
   }
 
+  userManagement(): void {
+    this.router.navigate(['/pending']);
+  }
+  // Navigate to View Bookings page
   viewBookings(): void {
     this.router.navigate(['/admin-booking']);
-  }
-
-  dashboard(): void {
-    this.router.navigate(['/admin-dashboard']);
   }
 
   attendence(): void {
     this.router.navigate(['/attendance']);
   }
+//--------------------------------------------------
 }

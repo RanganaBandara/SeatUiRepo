@@ -131,6 +131,8 @@ export class InternProfileComponent implements OnInit {
   defaultProfilePic = '../../assets/user.png'; // Path to the default profile picture
   internName: string = ''; // To hold the intern's name from the API
   selectedFile: File | null = null; 
+  changesPending: boolean = false; // Track if changes are pending approval
+
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     // Initialize the profile form
     this.profileForm = this.fb.group({
@@ -163,8 +165,6 @@ export class InternProfileComponent implements OnInit {
           phone: userProfile.phone 
         });
         this.internName = userProfile.name; 
-
-        // If the intern has a profile picture, set it; otherwise, keep the default
         this.profilePictureUrl = userProfile.profilePicture || this.defaultProfilePic;
       },
       (error) => {
@@ -183,8 +183,20 @@ export class InternProfileComponent implements OnInit {
 
   saveChanges(): void {
     if (this.profileForm.valid) {
-      console.log('Profile Updated:', this.profileForm.value);
-      this.isEditing = false; // Set editing state to false after saving
+      // Send changes to the server for admin approval
+      this.changesPending = true; // Mark changes as pending
+      const updatedProfile = { ...this.profileForm.value, changesPending: this.changesPending };
+      
+      this.http.post('https://your-api-url.com/intern/profile/update', updatedProfile)
+        .subscribe(
+          (response) => {
+            console.log('Changes submitted for admin approval:', response);
+            this.isEditing = false; // Set editing state to false after saving
+          },
+          (error: HttpErrorResponse) => {
+            console.error('Error submitting changes:', error);
+          }
+        );
     }
   }
 
@@ -192,20 +204,6 @@ export class InternProfileComponent implements OnInit {
     this.router.navigate(['/intern-profile']);
   }
 
-  // onFileSelected(event: any): void {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       this.profilePictureUrl = reader.result;
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
-
-  // uploadProfilePicture(): void {
-  //   // Code to upload the profile picture to the server
-  // }
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -213,7 +211,6 @@ export class InternProfileComponent implements OnInit {
     }
   }
 
-  // Method to upload the selected profile picture
   uploadProfilePicture(): void {
     if (!this.selectedFile) {
       console.error('No file selected.');

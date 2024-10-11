@@ -29,8 +29,8 @@
     </div>
     <h3>Intern Profile Information</h3>
 
-    <!-- View Profile Information -->
-    <div *ngIf="!isEditing" class="view-profile-container">
+     <!-- View Profile Information -->
+     <div *ngIf="!isEditing" class="view-profile-container">
       <div class="profile-field">
         <strong>Trainee ID:</strong>
         <span>{{ profileForm.value.traineeId }}</span>
@@ -51,7 +51,9 @@
         <span>{{ profileForm.value.phone }}</span>
       </div>
 
-      <div class="profile-divider"></div> <!-- Optional divider for separation -->
+      <div *ngIf="changesPending" class="pending-approval">
+        <p>Your changes are pending approval from the admin.</p>
+      </div>
 
       <button (click)="enableEdit()">Edit Profile</button>
     </div>

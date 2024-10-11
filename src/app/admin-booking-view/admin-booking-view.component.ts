@@ -66,7 +66,7 @@ export class AdminBookingViewComponent implements OnInit {
   
     if (selectedDate) {
       const options: Intl.DateTimeFormatOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-      const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', options).replace(/,/g, '');
+      const formattedDate =selectedDate.toDateString();
   
       console.log(`Selected date: ${formattedDate}`);
   
@@ -127,6 +127,14 @@ export class AdminBookingViewComponent implements OnInit {
           }
         );
       }
+    }
+    
+    isPastBooking(reservationDate: string): boolean {
+      const bookingDate = new Date(reservationDate);
+      const today = new Date();
+      
+      // Compare booking date with today's date and return true if booking date is in the past
+      return bookingDate < today;
     }
     
 

@@ -130,3 +130,10 @@
     background-color: #0056b3;
   }
   
+
+  .bookings-table td button:disabled {
+    background-color: #ccc; /* Change to your desired color */
+    color: #666; /* Change text color if needed */
+    cursor: not-allowed; /* Change cursor to indicate it’s not clickable */
+    border: 1px solid #aaa; /* Optional: change border color */
+  }

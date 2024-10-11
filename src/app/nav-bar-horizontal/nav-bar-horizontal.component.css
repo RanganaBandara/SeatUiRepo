@@ -1,0 +1,90 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #343a40;
+    padding: 5px 20px; /* Reduced top and bottom padding */
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar .left-section h2 {
+    margin: 0;
+    font-size: 20px; /* Reduced font size */
+    font-weight: bold;
+    color: #f8f9fa;
+}
+
+.navbar .right-section {
+    display: flex;
+    align-items: center;
+}
+
+.message-icon {
+    font-size: 18px; /* Reduced font size */
+    margin-left: 20px; /* Reduced margin */
+    cursor: pointer;
+    color: #f8f9fa;
+    transition: color 0.3s ease;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.profile-info span {
+    margin-right: 8px; /* Reduced margin */
+    color: #f8f9fa;
+    font-weight: 500;
+    font-size: 14px; /* Reduced font size */
+    margin-right: 20px;
+}
+
+.profile-info img {
+    width: 30px; /* Reduced image size */
+    height: 30px; /* Reduced image size */
+    border-radius: 50%;
+    /* border: 2px solid #ffc107; */
+    object-fit: cover;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    margin-right: 20px;
+    /* margin-left: 20px; */
+}
+
+.profile-info:hover img {
+    transform: scale(1.05); /* Reduced scale on hover */
+    border-color: #28a745;
+}
+
+.navbar .right-section .message-icon:hover {
+    color: #28a745;
+}
+
+.dropdown {
+    position: absolute; /* Position dropdown absolutely */
+    top: 100%; /* Position it right below the profile-info div */
+    right: 0; /* Align it to the right of the profile-info div */
+    background-color: #343a40; /* Match the navbar background */
+    color: #f8f9fa; /* Text color */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it appears above other elements */
+    padding: 10px 0; /* Add some padding for better spacing */
+    border-radius: 4px; /* Rounded corners for aesthetics */
+  }
+
+ 
+  .dropdown a {
+    display: block; /* Make links block level for full clickable area */
+    padding: 8px 16px; /* Add padding for clickable area */
+    color: #f8f9fa; /* Text color */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  .dropdown a:hover {
+    background-color: #28a745; /* Highlight on hover */
+  }

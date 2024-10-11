@@ -47,8 +47,15 @@
         <td>{{ booking.user_Id }}</td>
         <td>{{ booking.employeeName }}</td>
         <td>{{ booking.reservationDate }}</td>
-        <td>
+        <!--td>
           <button (click)="cancelBooking(booking)">Cancel</button>
+        </td-->
+        <td>
+          <button (click)="cancelBooking(booking)" 
+                  [disabled]="isPastBooking(booking.reservationDate)"
+                  [ngClass]="{'disabled-button': isPastBooking(booking.reservationDate)}">
+            Cancel
+          </button>
         </td>
       </tr>
     </tbody>

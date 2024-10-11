@@ -1,3 +1,5 @@
+<app-nav-bar-horizontal></app-nav-bar-horizontal>
+
 <div class="full">
   
   <nav class="sidebar">
@@ -6,10 +8,14 @@
       <li (click)="dashboard()">Dashboard</li>
       <li (click)="viewBookings()">View Bookings</li>
       <!-- <li (click)="viewBookingHistory()">View Booking History</li> -->
+      <li (click)="viewProfile()">View Profile</li>
       <li (click)="logout()">Log Out</li>
     </ul>
   </nav>
+  
+  
 <div class="dashboard-container">
+  
   <header class="dashboard-header">
     <h1>Intern Dashboard</h1>
     <p>Welcome! Here are the available seats for booking:</p>
@@ -44,8 +50,12 @@
       <button type="submit" [disabled]="isSubmitting">Submit</button>
 
       <button type="button" (click)="cancelBooking()">Cancel</button>
+      
     </form>
   </div>
+  <!-- Booking Error Modal -->
+  <!--app-booking-error-modal [errorMessage]="errorMessage"></app-booking-error-modal-->
+ 
 </div>
 
 </div>

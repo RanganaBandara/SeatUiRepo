@@ -23,7 +23,6 @@ import { NavBarHorizontalComponent } from '../nav-bar-horizontal/nav-bar-horizon
 })
 export class InternDashboardComponent implements OnInit {
   minDate: string;
-  minDate: String;
   seatnumbertdetails:any;
   seatNumber:number|null=null;
   seats: Seat[] = [];
@@ -48,8 +47,6 @@ export class InternDashboardComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     // Initialize booking form here if needed
     this.bookingForm = new FormGroup({});
-    const today = new Date();
-    this.minDate = today.toISOString().split('T')[0];
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0]; // Format to YYYY-MM-DD
 

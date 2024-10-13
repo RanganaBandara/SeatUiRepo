@@ -15,7 +15,7 @@ import { event } from 'jquery';
   styleUrls: ['./intern-dashboard.component.css']
 })
 export class InternDashboardComponent implements OnInit {
-  minDate: Date;
+  minDate: string;
   seatnumbertdetails:any;
   seatNumber:number|null=null;
   seats: Seat[] = [];
@@ -27,7 +27,7 @@ export class InternDashboardComponent implements OnInit {
   userId: number | null = null; // Ensure it's initialized
   username: string | null = null; // Change to appropriate type
   bookingForm: FormGroup;
-  formattedMinDate: string;
+  //formattedMinDate: string;
   seatNumbers: Seat[]=[];
 
   private http = inject(HttpClient); // Inject HttpClient
@@ -37,9 +37,8 @@ export class InternDashboardComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     // Initialize booking form here if needed
     this.bookingForm = new FormGroup({});
-    this.minDate = new Date();
-    this.formattedMinDate = this.minDate.toISOString().split('T')[0]; // Format to YYYY-MM-DD
-
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
     // Format to YYYY-MM-DD
   }
 

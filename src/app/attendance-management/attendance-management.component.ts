@@ -47,29 +47,26 @@ export class AttendanceManagementComponent implements OnInit {
   constructor(private http: HttpClient, private dialog: MatDialog) {}
 
   ngOnInit() {
+    
     this.fetchBookings();
     this.checkAdminStatus();
-    this.fetchMarkedAttendances();
+  
   }
 
   fetchBookings() {
-    const bookingsApiUrl = 'http://localhost:5121/api/Seats';
-    this.http.get<Booking[]>(bookingsApiUrl).subscribe({
+    const today=new Date();
+    const formattedDate = today.toDateString();
+    const bookingsApiUrl = `http://localhost:5121/api/Seats/Filtering/${formattedDate}`;
+    this.http.get<Booking>(bookingsApiUrl).subscribe({
       next: (response) => {
-        this.bookings = response;
+        this.bookings = [response];
         console.log('Fetched bookings:', this.bookings);
       },
       error: (error) => console.error('Error fetching bookings:', error),
     });
   }
 
-  fetchMarkedAttendances() {
-    const markedAttendancesApiUrl = 'http://localhost:5121/api/Seats/MarkedAttendances';
-    this.http.get<Booking[]>(markedAttendancesApiUrl).subscribe({
-      next: (response) => this.markedAttendances = response,
-      error: (error) => console.error('Error fetching marked attendances:', error),
-    });
-  }
+ 
 
   checkAdminStatus() {
     this.isAdmin = true; // Set this based on your logic
@@ -80,15 +77,16 @@ export class AttendanceManagementComponent implements OnInit {
       Id: 0, // Set to 0 if you're creating a new record
       User_Id: userId,
       Name: employeeName,
-      Date: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
+      Date: new Date().toDateString(), // Current date in YYYY-MM-DD format
       PRAb: isPresent,
       Reason: isPresent ? '' : reason // Pass the reason if absent
     };
   
-    this.http.post('http://localhost:5121/api/Seats/Attendence', attendance)
+    this.http.post(`http://localhost:5121/api/Seats/Attendence`, attendance)
       .subscribe(
         response => {
           console.log('Attendance marked successfully:', response);
+          console.log('Attendance marked successfully:', attendance);
           // Remove the marked booking from the bookings array
           this.bookings = this.bookings.filter(booking => booking.reservationId !== reservationId);
         },

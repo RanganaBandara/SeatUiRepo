@@ -66,7 +66,7 @@ export class AdminBookingViewComponent implements OnInit {
   
     if (selectedDate) {
       const options: Intl.DateTimeFormatOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-      const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', options).replace(/,/g, '');
+      const formattedDate = selectedDate.toDateString();
   
       console.log(`Selected date: ${formattedDate}`);
   

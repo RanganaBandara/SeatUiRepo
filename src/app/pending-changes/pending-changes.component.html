@@ -1,0 +1,41 @@
+<div class="dashboard-container">
+    <!-- Left Navigation Panel -->
+    <nav class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li (click)="viewBookings()">View Bookings</li>
+            <li (click)="viewBookingHistory()">View Booking History</li>
+            <li (click)="attendence()">Attendance</li>
+            <li (click)="userManagement()">User Management</li>
+            <li (click)="logout()">Log Out</li>
+        </ul>
+    </nav>
+
+    <div class="pending-changes-container">
+        <h2>Pending Changes</h2>
+        
+        <table class="pending-changes-table">
+            <thead>
+                <tr>
+                    <th>Trainee ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let change of pendingChanges">
+                    <td>{{ change.traineeId }}</td>
+                    <td>{{ change.name }}</td>
+                    <td>{{ change.email }}</td>
+                    <td>{{ change.phone }}</td>
+                    <td>
+                        <button (click)="approveChange(change.id)">Approve</button>
+                        <button (click)="rejectChange(change.id)">Reject</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

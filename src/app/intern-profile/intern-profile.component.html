@@ -1,21 +1,21 @@
+<app-nav-bar-horizontal></app-nav-bar-horizontal>
 
-  <!-- Profile Section at Top Right -->
-  <div class="top-right-profile">
-    <div class="profile-info">
-      <span class="intern-name">{{ internName }}</span>
-      <img [src]="profilePictureUrl" alt="Profile Picture" />
-    </div>
+<!-- Profile Section at Top Right -->
+<div class="top-right-profile">
+  <div class="profile-info">
+    <span class="intern-name">{{ internName }}</span>
+    <img [src]="profilePictureUrl" alt="Profile Picture" />
   </div>
+</div>
 <div class="dashboard-container">
- 
+
   <!-- Left Navigation Panel -->
   <nav class="sidebar">
-    
     <h2>Intern Panel</h2>
     <ul>
       <li (click)="dashboard()">Dashboard</li>
+      <li (click)="viewBookings()">View Bookings</li>
       <li (click)="viewProfile()">View Profile</li>
-      <!--li (click)="editProfile()">Edit Profile</li-->
       <li (click)="changePassword()">Change Password</li>
       <li (click)="logout()">Log Out</li>
     </ul>
@@ -23,38 +23,63 @@
 
   <!-- Main Content Area -->
   <div class="main-content">
-       <!-- Profile Picture Section at Top Right -->
-       <div class="top-right-profile">
-        <img [src]="profilePictureUrl" alt="Profile Picture" />
-      </div>
+    <!-- Profile Picture Section at Top Right -->
+    <div class="top-right-profile">
+      <img [src]="profilePictureUrl" alt="Profile Picture" />
+    </div>
     <h3>Intern Profile Information</h3>
 
-    <!-- View Profile Information -->
-    <div *ngIf="!isEditing">
-      <p><strong>Name:</strong> {{ profileForm.value.name }}</p>
-      <p><strong>Email:</strong> {{ profileForm.value.email }}</p>
-      <p><strong>Phone:</strong> {{ profileForm.value.phone }}</p>
+     <!-- View Profile Information -->
+     <div *ngIf="!isEditing" class="view-profile-container">
+      <div class="profile-field">
+        <strong>Trainee ID:</strong>
+        <span>{{ profileForm.value.traineeId }}</span>
+      </div>
+
+      <div class="profile-field">
+        <strong>Name:</strong>
+        <span>{{ profileForm.value.name }}</span>
+      </div>
+
+      <div class="profile-field">
+        <strong>Email:</strong>
+        <span>{{ profileForm.value.email }}</span>
+      </div>
+
+      <div class="profile-field">
+        <strong>Phone:</strong>
+        <span>{{ profileForm.value.phone }}</span>
+      </div>
+
+      <div *ngIf="changesPending" class="pending-approval">
+        <p>Your changes are pending approval from the admin.</p>
+      </div>
+
       <button (click)="enableEdit()">Edit Profile</button>
     </div>
 
     <!-- Edit Profile Form -->
-    <div class="profile-container">
+    <div class="profile-container" *ngIf="isEditing">
       <label for="profilePicture">Upload Profile Picture</label>
       <input type="file" id="profilePicture" (change)="onFileSelected($event)">
       <button (click)="uploadProfilePicture()">Upload</button>
+
+      <form [formGroup]="profileForm">
+        <label for="traineeId">Trainee ID:</label>
+        <input type="text" id="traineeId" formControlName="traineeId" readonly>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email">
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" formControlName="phone">
+
+        <button (click)="saveChanges()">Save Changes</button>
+        <button (click)="back()">Back</button>
+      </form>
     </div>
-    
-    <form [formGroup]="profileForm" *ngIf="isEditing">
-      <label for="name">Name:</label>
-      <input type="text" id="name" formControlName="name">
-      
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email">
-      
-      <label for="phone">Phone:</label>
-      <input type="text" id="phone" formControlName="phone">
-      
-      <button (click)="saveChanges()">Save Changes</button>
-    </form>
   </div>
 </div>

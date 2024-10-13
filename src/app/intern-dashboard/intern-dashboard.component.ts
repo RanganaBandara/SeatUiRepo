@@ -6,16 +6,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Seat } from '../../models/internDashboard.model';
 import { UserService } from '../user.service';
 import { event } from 'jquery';
-
+import { BookingErrorModalComponent } from '../booking-error-modal/booking-error-modal.component';
+//import { BookingSucessModalComponent } from '../booking-sucess-modal/booking-sucess-modal.component';
+import { NavBarHorizontalComponent } from '../nav-bar-horizontal/nav-bar-horizontal.component';
 @Component({
   selector: 'app-intern-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule,
+            FormsModule, 
+            ReactiveFormsModule,
+            HttpClientModule,
+            BookingErrorModalComponent,
+            NavBarHorizontalComponent],
   templateUrl: './intern-dashboard.component.html',
   styleUrls: ['./intern-dashboard.component.css']
 })
 export class InternDashboardComponent implements OnInit {
   minDate: string;
+  minDate: String;
   seatnumbertdetails:any;
   seatNumber:number|null=null;
   seats: Seat[] = [];
@@ -27,8 +35,11 @@ export class InternDashboardComponent implements OnInit {
   userId: number | null = null; // Ensure it's initialized
   username: string | null = null; // Change to appropriate type
   bookingForm: FormGroup;
-  //formattedMinDate: string;
+ 
   seatNumbers: Seat[]=[];
+
+  //errorMessage: string | null = null; // Add errorMessage property
+  //sucessMessage: string | null = null; // Add errorMessage property
 
   private http = inject(HttpClient); // Inject HttpClient
   private router = inject(Router); // Inject Router
@@ -39,6 +50,9 @@ export class InternDashboardComponent implements OnInit {
     this.bookingForm = new FormGroup({});
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+
     // Format to YYYY-MM-DD
   }
 
@@ -151,7 +165,9 @@ export class InternDashboardComponent implements OnInit {
         next: (response) => {
           console.log('Booking successful:', response);
           alert('Booking confirmed successfully!');
-         
+          //this.sucessMessage = 'Your booking was successful!'; // Set the success message
+          
+
           this.onDateChange(); // Refresh seat availability
           this.showBookingForm = false;
         },
@@ -163,7 +179,12 @@ export class InternDashboardComponent implements OnInit {
           this.isSubmitting = false;
         }
       });
-    } else {
+    } else 
+    // {
+    //   this.errorMessage = 'Please fill out the form correctly.'; // Set the error message
+    //   this.isSubmitting = false; // Reset the submitting state
+    // }
+    {
       alert('Please fill out the form correctly.');
       this.isSubmitting = false;
     }
@@ -217,5 +238,9 @@ export class InternDashboardComponent implements OnInit {
 
   dashboard(): void {
     this.router.navigate(['/intern-dashboard']);
+  }
+
+  viewProfile(): void {
+    this.router.navigate(['/intern-profile']);
   }
 }

@@ -12,6 +12,7 @@ import { InternProfileComponent } from './intern-profile/intern-profile.componen
 import { AttendanceManagementComponent } from './attendance-management/attendance-management.component';
 //import { ForgetPasswordComponent } from './forgot-password/forgot-password.component';
 //import { VerifyCodeComponent } from './verify-code/verify-code.component';
+import { PendingChangesComponent } from './pending-changes/pending-changes.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },  
@@ -27,7 +28,7 @@ export const routes: Routes = [
   {path:'intern-booking',component:InternBookingComponent},
   {path:'intern-profile',component:InternProfileComponent},
   {path:'attendance',component:AttendanceManagementComponent},
-  
+  {path:'pending',component:PendingChangesComponent},
  // { path: 'forgot-password', component: ForgetPasswordComponent },
   //{ path: 'verify-code', component: VerifyCodeComponent },
  

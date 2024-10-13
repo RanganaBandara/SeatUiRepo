@@ -74,6 +74,46 @@ onSubmit(){
           })
         }
       }
+
+
+///////////////////new//////////////////////new///////
+loginWithFacebook(): void {
+  window.FB.login((response: any) => {
+    if (response.authResponse) {
+      const accessToken = response.authResponse.accessToken;
+
+      // Send the access token to the backend
+      this.http.post('https://your-backend-api.com/api/facebook-login', { token: accessToken })
+        .subscribe(response => {
+          console.log('Login successful!', response);
+          // Handle login success (e.g., store the JWT in localStorage)
+        });
+    } else {
+      console.log('User cancelled login or did not fully authorize.');
+    }
+  }, { scope: 'email' });
+}
+
+
+sendTokenToBackend(token: string): void {
+  this.http.post('https://localhost:5121/api/auth/facebook-login', { accessToken: token })
+    .subscribe({
+      next: (response: any) => {
+        // Handle response, typically save the JWT token in local storage
+        const jwtToken = response.token;
+        localStorage.setItem('token', jwtToken);
+        this.router.navigate(['/intern-dashboard']);  // Redirect to the dashboard
+      },
+      error: (error) => {
+        this.notificationService.showError('Facebook login failed.');
+        console.error('Error during Facebook login:', error);
+      }
+    });
+}
+////////////////////////////
+
+
+
     };
   
   

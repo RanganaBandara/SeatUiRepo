@@ -88,6 +88,9 @@ export class AdminDashboardComponent {
     this.router.navigate(['/admin-history']);
   }
 
+  userManagement(): void {
+    this.router.navigate(['/pending']);
+  }
   // Navigate to View Bookings page
   viewBookings(): void {
     this.router.navigate(['/admin-booking']);

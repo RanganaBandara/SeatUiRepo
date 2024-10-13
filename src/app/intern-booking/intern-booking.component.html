@@ -1,3 +1,4 @@
+<app-nav-bar-horizontal></app-nav-bar-horizontal>
 <div class="dashboard-container">
   <!-- Left Navigation Panel -->
   <nav class="sidebar">
@@ -5,6 +6,7 @@
    <ul>
     <li (click)="dashboard()">Dashboard</li>
     <li (click)="viewBookings()">View Bookings</li>
+    <li (click)="viewProfile()">View Bookings</li>
     <!-- <li (click)="viewBookingHistory()">View Booking History</li> -->
     <li (click)="logout()">Log Out</li>
   </ul>
@@ -38,7 +40,12 @@
        <td>{{ booking.employeeName }}</td>
        <td>{{ booking.reservationDate }}</td>
        <td>
-        <button (click)="cancelBooking(booking)">Cancel</button>
+        <!-- <button (click)="cancelBooking(booking)">Cancel</button> -->
+        <button (click)="cancelBooking(booking)" 
+        [disabled]="isPastBooking(booking.reservationDate)"
+        [ngClass]="{'disabled-button': isPastBooking(booking.reservationDate)}">
+  Cancel
+</button>
       </td>
      </tr>
    </tbody>

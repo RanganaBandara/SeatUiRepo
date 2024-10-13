@@ -10,7 +10,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { data, event } from 'jquery';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
-
+import { NavBarHorizontalComponent } from '../nav-bar-horizontal/nav-bar-horizontal.component';
 interface Booking {
   reservationId:number;
   seatNumber: number;
@@ -28,7 +28,8 @@ interface Booking {
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatNativeDateModule],
+    MatNativeDateModule,
+  NavBarHorizontalComponent],
   templateUrl: './intern-booking.component.html',
   styleUrl: './intern-booking.component.css'
 })
@@ -88,15 +89,44 @@ export class InternBookingComponent  implements OnInit {
     this.router.navigate(['/intern-booking']);
   }
 
+  viewProfile(): void {
+    this.router.navigate(['/intern-profile']);
+  }
+
   //navigate to intern dashboard
   dashboard(): void {
     this.router.navigate(['/intern-dashboard']);
   }
 
+  // cancelBooking(booking: Booking): void {
+  //   const confirmation = confirm(`Are you sure you want to cancel the booking for seat ${booking.seatNumber}?`);
+  //   if (confirmation) {
+  //     this.http.delete(`http://localhost:5121/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(      //change url
+  //       () => {
+  //         this.bookings = this.bookings.filter(b => b !== booking);
+  //         alert(`Booking for seat ${booking.seatNumber} has been canceled.`);
+  //       },
+  //       error => {
+  //         console.error('Error canceling booking:', error);
+  //       }
+  //     );
+  //   }
+  // }
+
   cancelBooking(booking: Booking): void {
+    // Parse the reservation date
+    const bookingDate = new Date(booking.reservationDate);
+    const today = new Date();
+  
+    // Check if the booking date is in the future
+    if (bookingDate < today) {
+      alert('Cannot cancel bookings for past dates.');
+      return; // Exit the function without performing the cancellation
+    }
+  
     const confirmation = confirm(`Are you sure you want to cancel the booking for seat ${booking.seatNumber}?`);
     if (confirmation) {
-      this.http.delete(`http://localhost:5121/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(      //change url
+      this.http.delete(`http://localhost:5121/api/Seats/CancelReservation/${booking.reservationId}`).subscribe(
         () => {
           this.bookings = this.bookings.filter(b => b !== booking);
           alert(`Booking for seat ${booking.seatNumber} has been canceled.`);
@@ -107,6 +137,16 @@ export class InternBookingComponent  implements OnInit {
       );
     }
   }
+  
+  isPastBooking(reservationDate: string): boolean {
+    const bookingDate = new Date(reservationDate);
+    const today = new Date();
+    
+    // Compare booking date with today's date and return true if booking date is in the past
+    return bookingDate < today;
+  }
+  
+
 
 
   }

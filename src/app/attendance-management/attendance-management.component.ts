@@ -134,24 +134,32 @@ export class AttendanceManagementComponent implements OnInit {
     });
   }
 
-  viewBookings() {
+ //-------------------------------------------------
+  // Logout the user and navigate to the login page
+  logout(): void {
+    this.router.navigate(['/home']);
+  }
+
+  // Navigate to Manage Bookings page
+  //managebookings(): void {
+    //this.router.navigate(['/admin-booking']);
+  //}
+
+  // Navigate to View Booking History page
+  viewBookingHistory(): void {
+    this.router.navigate(['/admin-history']);
+  }
+
+  userManagement(): void {
+    this.router.navigate(['/pending']);
+  }
+  // Navigate to View Bookings page
+  viewBookings(): void {
     this.router.navigate(['/admin-booking']);
-  }
-
-  viewBookingHistory() {
-    this.router.navigate(['/admin-history']); 
-  }
-
-  logout() {
-    console.log('Logging out');
-    this.router.navigate(['/home']); 
-  }
-
-  dashboard(): void {
-    this.router.navigate(['/admin-dashboard']);
   }
 
   attendence(): void {
     this.router.navigate(['/attendance']);
   }
+//--------------------------------------------------
 }

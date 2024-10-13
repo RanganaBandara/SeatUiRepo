@@ -88,6 +88,12 @@ export class AdminDashboardComponent {
     this.router.navigate(['/admin-history']);
   }
 
+  //message with admin/intern
+message(){
+  this.router.navigate(['/message']);    
+}
+
+
   // Navigate to View Bookings page
   viewBookings(): void {
     this.router.navigate(['/admin-booking']);

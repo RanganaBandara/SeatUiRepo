@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,6 +6,8 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NotificationService } from '../services/notification.service';
 import { UserService } from '../user.service';
+
+
 
 
 //import {firebaseConfig} from '../../firebase.config';
@@ -41,8 +43,10 @@ export class LoginComponent implements AfterViewInit {
   private http = inject(HttpClient);
   private router = inject(Router); 
   private notificationService = inject(NotificationService); 
+  private userService = inject(UserService); 
+  private ngZone = inject(NgZone);
 
-  constructor(private userService: UserService) {
+  constructor() {
     this.loginForm = this.fb.group({
       User_Id: ['',[ Validators.required,Validators.pattern('^[0-9]*$')]],
       Password: ['', Validators.required]
@@ -60,6 +64,7 @@ export class LoginComponent implements AfterViewInit {
     // Get the user's email
     const Email = payload.email;
     console.log('User email:', Email);
+   
     this.sendTokenToBackend(response.credential);
     this.idfromemail(Email);
     
@@ -69,6 +74,9 @@ export class LoginComponent implements AfterViewInit {
       next: (response: any) => {
         console.log(response.user_Id);
         this.email=response.user_Id;
+        this.userService.setUserId=this.email;
+        console.log(this.userService.getUserId());
+        
        
   }})}
 
@@ -79,6 +87,7 @@ export class LoginComponent implements AfterViewInit {
   }
   ngAfterViewInit(): void {
     if (window.google) {
+      this.userService.setUserId(10);
       console.log("Google script loaded successfully.");
       window.google.accounts.id.initialize({
         client_id: "216245630815-13t966f7v62lkmkkgeehov52tgqdqjo7.apps.googleusercontent.com",
@@ -99,12 +108,14 @@ export class LoginComponent implements AfterViewInit {
     
       .subscribe({
         next: (response: any) => {
-          
+         
           const jwtToken = response.Token;
           localStorage.setItem('token', jwtToken);
           console.log("google token",response);
-          this.userService.setUserId(this.email);
-          this.router.navigate(['/intern-dashboard']);
+          
+          this.ngZone.run(() => {
+            this.router.navigate(['/intern-dashboard']); // Navigate to the next page
+          });
         },
         error: (error) => {
           this.notificationService.showError('Google login failed.');
@@ -145,7 +156,7 @@ onSubmit(){
         console.log(value);
         if(value!=null){
           this.router.navigate(['/intern-dashboard'])
-       
+         
 
         }else{
         this.notificationService.showError("Invalid Credentials or register please");

@@ -7,14 +7,28 @@ import { CommonModule } from '@angular/common';
 import { NotificationService } from '../services/notification.service';
 import { UserService } from '../user.service';
 
+
+//import {firebaseConfig} from '../../firebase.config';
+import {  AfterViewInit } from '@angular/core';
+
+
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
+
+
+
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [ReactiveFormsModule, HttpClientModule, CommonModule,RouterModule]  
+  imports: [ReactiveFormsModule, HttpClientModule, CommonModule,RouterModule,]  
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
   loginForm: FormGroup;
   username:any;
   userid:any;
@@ -31,10 +45,53 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       User_Id: ['',[ Validators.required,Validators.pattern('^[0-9]*$')]],
       Password: ['', Validators.required]
-      
+    
+
     });
   }
  
+   // Define the missing handleCredentialResponse method
+   handleCredentialResponse(response: any) {
+    console.log("Encoded JWT ID token: " + response.credential);
+    this.sendTokenToBackend(response.credential);
+  }
+  ngAfterViewInit(): void {
+    if (window.google) {
+      console.log("Google script loaded successfully.");
+      window.google.accounts.id.initialize({
+        client_id: "216245630815-13t966f7v62lkmkkgeehov52tgqdqjo7.apps.googleusercontent.com",
+        callback: this.handleCredentialResponse.bind(this)
+      });
+  
+      window.google.accounts.id.renderButton(
+        document.getElementById("g_id_onload"),
+        { theme: "outline", size: "large" }
+      );
+    } else {
+      console.error("Google script did not load.");
+    }
+  }
+  sendTokenToBackend(IdToken: string): void {
+    console.log(IdToken);
+    this.http.post('http://localhost:5121/api/Auth/google', { IdToken })
+    
+      .subscribe({
+        next: (response: any) => {
+          
+          const jwtToken = response.Token;
+          localStorage.setItem('token', jwtToken);
+          console.log("google token",response);
+          this.router.navigate(['/intern-dashboard']);
+        },
+        error: (error) => {
+          this.notificationService.showError('Google login failed.');
+          console.error('Error during Google login:', error);
+        }
+      });
+  }
+
+
+  /////////
 
 onRegister(): void {
   this.router.navigate(['/register']);
@@ -74,46 +131,87 @@ onSubmit(){
           })
         }
       }
+//////////////////////new///////////////////////
+// loginWithGoogle(): void {
+//   GoogleLogin({
+//     onSuccess: (response) => {
+//       console.log('Login successful!', response);
+//       const token = response.credential;
+//       this.sendTokenToBackend(token);
+//     },
+//     onError: () => {
+//       this.notificationService.showError('Google login failed.');
+//     },
+//   });
+// }
+// loginWithGoogle(): void {
+//   GoogleLogin({
+//     onSuccess: (response) => {
+//       console.log('Login successful!', response);
+//       const token = response.credential;
+//       if (token) {
+//         this.sendTokenToBackend(token);
+//       } else {
+//         this.notificationService.showError('Google login did not return a token.');
+//       }
+//     },
+//     onError: () => {
+//       this.notificationService.showError('Google login failed.');
+//     },
+//   });
+// }
 
+
+// sendTokenToBackendGoogle(token: string): void {
+//   this.http.post('https://localhost:5121/api/auth/google-login', { token })
+//     .subscribe({
+//       next: (response: any) => {
+//         const jwtToken = response.token;
+//         localStorage.setItem('token', jwtToken);
+//         this.router.navigate(['/intern-dashboard']);
+//       },
+//       error: () => {
+//         this.notificationService.showError('Google login failed.');
+//       }
+//     });
+// }
 
 ///////////////////new//////////////////////new///////
-loginWithFacebook(): void {
-  window.FB.login((response: any) => {
-    if (response.authResponse) {
-      const accessToken = response.authResponse.accessToken;
+// loginWithFacebook(): void {
+//   window.FB.login((response: any) => {
+//     if (response.authResponse) {
+//       const accessToken = response.authResponse.accessToken;
 
-      // Send the access token to the backend
-      this.http.post('https://your-backend-api.com/api/facebook-login', { token: accessToken })
-        .subscribe(response => {
-          console.log('Login successful!', response);
-          // Handle login success (e.g., store the JWT in localStorage)
-        });
-    } else {
-      console.log('User cancelled login or did not fully authorize.');
-    }
-  }, { scope: 'email' });
-}
+//       // Send the access token to the backend
+//       this.http.post('https://your-backend-api.com/api/facebook-login', { token: accessToken })
+//         .subscribe(response => {
+//           console.log('Login successful!', response);
+//           // Handle login success (e.g., store the JWT in localStorage)
+//         });
+//     } else {
+//       console.log('User cancelled login or did not fully authorize.');
+//     }
+//   }, { scope: 'email' });
+// }
 
 
-sendTokenToBackend(token: string): void {
-  this.http.post('https://localhost:5121/api/auth/facebook-login', { accessToken: token })
-    .subscribe({
-      next: (response: any) => {
-        // Handle response, typically save the JWT token in local storage
-        const jwtToken = response.token;
-        localStorage.setItem('token', jwtToken);
-        this.router.navigate(['/intern-dashboard']);  // Redirect to the dashboard
-      },
-      error: (error) => {
-        this.notificationService.showError('Facebook login failed.');
-        console.error('Error during Facebook login:', error);
-      }
-    });
-}
+// sendTokenToBackend(token: string): void {
+//   this.http.post('https://localhost:5121/api/auth/facebook-login', { accessToken: token })
+//     .subscribe({
+//       next: (response: any) => {
+//         // Handle response, typically save the JWT token in local storage
+//         const jwtToken = response.token;
+//         localStorage.setItem('token', jwtToken);
+//         this.router.navigate(['/intern-dashboard']);  // Redirect to the dashboard
+//       },
+//       error: (error) => {
+//         this.notificationService.showError('Facebook login failed.');
+//         console.error('Error during Facebook login:', error);
+//       }
+//     });
+// }
 ////////////////////////////
 
 
 
     };
-  
-  

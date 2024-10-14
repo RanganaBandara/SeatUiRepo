@@ -32,6 +32,7 @@ export class LoginComponent implements AfterViewInit {
   loginForm: FormGroup;
   username:any;
   userid:any;
+  email:any;
 
   private apiUrl = 'http://localhost:5121/User/Login';      //change url 
    private apiUrl1 = 'http://localhost:5121/User/User_Id';  //change url
@@ -53,7 +54,28 @@ export class LoginComponent implements AfterViewInit {
    // Define the missing handleCredentialResponse method
    handleCredentialResponse(response: any) {
     console.log("Encoded JWT ID token: " + response.credential);
+    const credential = response.credential;
+    const payload = this.parseJwt(credential);
+    
+    // Get the user's email
+    const Email = payload.email;
+    console.log('User email:', Email);
     this.sendTokenToBackend(response.credential);
+    this.idfromemail(Email);
+    
+  }
+  idfromemail(Email:string){
+    this.http.get(`http://localhost:5121/User/${Email}`).subscribe({           //change url
+      next: (response: any) => {
+        console.log(response.user_Id);
+        this.email=response.user_Id;
+       
+  }})}
+
+  parseJwt(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
   }
   ngAfterViewInit(): void {
     if (window.google) {
@@ -81,6 +103,7 @@ export class LoginComponent implements AfterViewInit {
           const jwtToken = response.Token;
           localStorage.setItem('token', jwtToken);
           console.log("google token",response);
+          this.userService.setUserId(this.email);
           this.router.navigate(['/intern-dashboard']);
         },
         error: (error) => {

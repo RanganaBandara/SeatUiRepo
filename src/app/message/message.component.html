@@ -1,0 +1,52 @@
+<div class="dashboard-container">
+  <nav class="sidebar">
+      <h2>Admin Panel</h2>
+      <ul>
+          <li (click)="dashboard()">Dashboard</li>
+          <li (click)="viewBookings()">View Bookings</li>
+          <li (click)="viewBookingHistory()">View Booking History</li>
+          <li (click)="message()">Message</li>
+          <li (click)="logout()">Log Out</li>
+      </ul>
+  </nav>
+
+  <div class="content">
+      <div class="admin-header">
+          <h1>Connect with others......</h1>
+          <br>
+          <p>Select option</p>
+      </div>
+
+      <!-- Dropdown to select Admin or Intern -->
+      <select id="userType" class="user-type-dropdown" (change)="showForm($event)">
+          <option value="" disabled selected>Select User Type</option>
+          <option value="admin">Admin</option>
+          <option value="intern">Intern</option>
+      </select>
+
+      <!-- Admin Form (hidden by default) -->
+      <div id="adminForm" *ngIf="showAdminForm">
+          <h3>Send a message to Admin</h3>
+          <form>
+              <label for="adminMessage">Message:</label>
+              <textarea id="adminMessage" placeholder="Enter your message"></textarea>
+              <br>
+              <button type="submit">Send to Admin</button>
+          </form>
+      </div>
+
+      <!-- Intern Form (hidden by default) -->
+      <div id="internForm" *ngIf="showInternForm">
+          <h3>Send a message to Intern</h3>
+          <form>
+              <label for="internId">Intern ID:</label>
+              <input type="text" id="internId" placeholder="Enter Intern ID">
+              <br>
+              <label for="internMessage">Message:</label>
+              <textarea id="internMessage" placeholder="Enter your message"></textarea>
+              <br>
+              <button type="submit">Send to Intern</button>
+          </form>
+      </div>
+  </div>
+</div>

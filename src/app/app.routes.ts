@@ -10,6 +10,7 @@ import { AdminHistoryComponent } from './admin-history/admin-history.component';
 import { InternBookingComponent } from './intern-booking/intern-booking.component';
 import { InternProfileComponent } from './intern-profile/intern-profile.component';
 import { AttendanceManagementComponent } from './attendance-management/attendance-management.component';
+import { MessageComponent } from './message/message.component';
 //import { ForgetPasswordComponent } from './forgot-password/forgot-password.component';
 //import { VerifyCodeComponent } from './verify-code/verify-code.component';
 import { PendingChangesComponent } from './pending-changes/pending-changes.component';
@@ -29,6 +30,7 @@ export const routes: Routes = [
   {path:'intern-profile',component:InternProfileComponent},
   {path:'attendance',component:AttendanceManagementComponent},
   {path:'pending',component:PendingChangesComponent},
+  {path:'message',component:MessageComponent}
  // { path: 'forgot-password', component: ForgetPasswordComponent },
   //{ path: 'verify-code', component: VerifyCodeComponent },
  

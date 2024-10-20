@@ -187,7 +187,7 @@ export class InternProfileComponent implements OnInit {
       this.changesPending = true; // Mark changes as pending
       const updatedProfile = { ...this.profileForm.value, changesPending: this.changesPending };
       
-      this.http.post('https://your-api-url.com/intern/profile/update', updatedProfile)
+      this.http.put('https://your-api-url.com/intern/profile/update', updatedProfile)
         .subscribe(
           (response) => {
             console.log('Changes submitted for admin approval:', response);

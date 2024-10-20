@@ -40,9 +40,7 @@ export class NavBarHorizontalComponent {
   goToSettings() {
     console.log('Navigating to Settings...');
   }
-message(){
-  this.router.navigate(['/message']);
-}
+
   // Fetch intern profile (name and image URL) from backend API
   loadInternProfile() {
     const apiUrl = 'https://your-backend-api.com/api/intern/profile'; // Replace with actual API URL

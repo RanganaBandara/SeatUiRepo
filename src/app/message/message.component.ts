@@ -34,10 +34,6 @@ export class MessageComponent {
     this.router.navigate(['/admin-history']);
   }
 
-  message(){
-    this.router.navigate(['/message']);    
-  }
-
   logout(): void {
     this.router.navigate(['/home']);
   }

@@ -33,7 +33,9 @@ export class NavBarHorizontalComponent {
     console.log('Navigating to Profile...'); // Check if this logs
     this.router.navigate(['/intern-profile']);
   }
-  
+  message(){
+    this.router.navigate(['/message']);    
+  }
 
   goToSettings() {
     console.log('Navigating to Settings...');
